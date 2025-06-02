@@ -1,0 +1,17 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --background-color: #333;
+}
+
+/* Opcional: ajustar estilos base */
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  background-color: var(--background-color);
+}
