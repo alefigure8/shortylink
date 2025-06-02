@@ -161,6 +161,10 @@ a:hover {
   text-decoration: none;
 }
 
+response-section span {
+  font-weight: bold;
+}
+
 .form-wrapper {
   grid-area: input-wrapper;
   display: flex;
@@ -191,4 +195,25 @@ a:hover {
       "input-section";
     grid-template-columns: 1fr;
   }
+}
+
+.alert{
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.alert-heading {
+  font-weight: bold;
+  margin-bottom: 5px;
 }

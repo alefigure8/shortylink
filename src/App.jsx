@@ -1,14 +1,17 @@
 import "./App.css";
-import Nav from "./component/Nav.jsx";
-import Footer from "./component/Footer.jsx";
-import Main from "./component/Main.jsx";  
+import Nav from "./component/layout/Nav.jsx";
+import Footer from "./component/layout/Footer.jsx";
+import MainContent from "./component/main/MainContent.jsx";
+import { LinkProvider } from "./context/LinkCreateProvider.jsx";
 
 function App() {
   return (
     <>
-      <Nav />
-      <Main />
-      <Footer />
+      <LinkProvider>
+        <Nav />
+        <MainContent />
+        <Footer />
+      </LinkProvider>
     </>
   );
 }
