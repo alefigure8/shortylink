@@ -55,6 +55,13 @@ nav {
   padding-left: 20px;
   display: flex;
   align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-user
+{
+  color: var(--text-color);
 }
 
 ul {

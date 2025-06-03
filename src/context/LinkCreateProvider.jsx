@@ -1,9 +1,13 @@
 // LinkProvider.jsx
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LinkContext } from "./LinkCreateContext.js";
 import createLink from "../service/linkService.js"; 
+import { SessionContext } from "./sessionContext.js";
 
 export function LinkProvider({ children }) {
+
+  const {session} = useContext(SessionContext);
+
   // Estado para almacenar los datos del formulario
   const [form, setForm] = useState({
     originalurl: "",
@@ -32,6 +36,7 @@ export function LinkProvider({ children }) {
       const response = await createLink({
         originalurl: form.originalurl,
         name: form.name,
+        token: session?.token || null
       });
       setResponse(response);
       setError(null);

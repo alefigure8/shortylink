@@ -2,11 +2,13 @@ import ErrorAlert from "../alerts/ErrorAlert.jsx";
 import { useEffect } from "react";
 import { LinkContext } from "../../context/LinkCreateContext.js";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { SessionContext } from "../../context/sessionContext.js";
 
 function LinkForm() {
-
-  const { form, error, setError, handleInputChange, handleButtonClick } = useContext(LinkContext);
-
+  const { form, error, setError, handleInputChange, handleButtonClick } =
+    useContext(LinkContext);
+  const { session } = useContext(SessionContext);
   useEffect(() => {
     setTimeout(() => {
       setError(null);
@@ -34,11 +36,17 @@ function LinkForm() {
         <button type="button" onClick={() => handleButtonClick()}>
           Crear Enlace
         </button>
-        <div className="login-link">
-          <a href="#">Crear Usuario</a>
-          <span> | </span>
-          <a href="#">Iniciar Sesión</a>
-        </div>
+        {!session && (
+          <div className="login-link">
+            <Link to="/register" className="text-blue-500 hover:underline">
+              Crear usuario
+            </Link>
+            <span> | </span>
+            <Link to="/login" className="text-blue-500 hover:underline">
+              Iniciar Sesión
+            </Link>
+          </div>
+        )}
         {error && <ErrorAlert error={error} />}
       </div>
     </>
