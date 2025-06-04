@@ -1,0 +1,19 @@
+:root {
+  --primary-color: #4caf50;
+  --secondary-color: #444;
+  --background-color: #333;
+  --text-color: #fff;
+  --nav-height: 60px;
+  --conteiner-width: 1200px;
+}
+
+.layout-content {
+  grid-area: main-content;
+  min-width: 100%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.layout {
+  background-color: var(--background-color);
+}

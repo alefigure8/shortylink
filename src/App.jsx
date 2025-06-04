@@ -1,30 +1,35 @@
 import "./App.css";
-import MainContent from "./component/main/MainContent.jsx";
 import { LinkProvider } from "./context/LinkCreateProvider.jsx";
 import { Routes, Route } from "react-router-dom";
-import Layout from "./component/layout/Layout.jsx";
-import Login from "./component/layout/Login.jsx";
-import Error404 from "./component/layout/Error404.jsx";
 import { SessionProvider } from "./context/SessionProvider.jsx";
-import Dashboard from "./component/layout/Dashboard/Dashboard.jsx";
-import ProtectedRoute from "./component/layout/ProtectedRoute.jsx";
+import Layout from "./layout/Layout.jsx"
+import DashboardLayout from "./layout/DashboardLayout.jsx"
+import ProtectedRoute from "./layout/ProtectedRoute.jsx"
+import Main from "./pages/Main.jsx"
+import Error404 from "./pages/Error404.jsx"
+import Login from "./pages/Login.jsx"
+import DashboardMain from "./pages/dashboard/DashboardMain.jsx"
+
 
 function App() {
   return (
     <SessionProvider>
       <LinkProvider>
         <Routes>
-          {/* RUTAS NO PROTEGIDAS */}
+          {/* CON Navbar/Footer */}
           <Route path="/" element={<Layout />}>
-            <Route index element={<MainContent />} />
+            {/* Páginas públicas dentro del Layout */}
+            <Route index element={<Main />} />
             <Route path="*" element={<Error404 />} />
-            {/*RUTAS PROTEGIDAS*/}
-            <Route path="/" element={<ProtectedRoute />}>
-              {/* RUTAS CON LAYOUT */}
-              <Route path="account" element={<Dashboard />} />
+
+            {/* Protegidas */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="account" element={<DashboardLayout />}>
+                <Route index element={<DashboardMain />} />
+              </Route>
             </Route>
           </Route>
-          {/* RUTAS PUBLICAS */}
+          {/* PÚBLICAS sin Navbar/Footer */}
           <Route path="login" element={<Login />} />
         </Routes>
       </LinkProvider>

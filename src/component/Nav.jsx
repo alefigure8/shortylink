@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { SessionContext } from "../../context/sessionContext";
+import { SessionContext } from "../context/SessionContext.js";
+import "../styles/component/Nav.css"
 
 function Nav() {
   const { session, logout } = useContext(SessionContext);
@@ -16,7 +17,7 @@ function Nav() {
         <div className="nav-options">
           <ul>
             <li>
-              <a href="#home">Inicio</a>
+              <a href="/">Inicio</a>
             </li>
             <li>
               <a href="#about">Acerca de</a>

@@ -1,0 +1,20 @@
+nav {
+  grid-area: header;
+  background-color: var(--secondary-color);
+  height: var(--nav-height);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 10px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-user
+{
+  color: var(--text-color);
+}

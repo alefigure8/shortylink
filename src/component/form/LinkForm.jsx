@@ -4,7 +4,7 @@ import { LinkContext } from "../../context/LinkCreateContext.js";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { SessionContext } from "../../context/sessionContext.js";
-
+import "../../styles/component/LinkForm.css"
 function LinkForm() {
   const { form, error, setError, handleInputChange, handleButtonClick } =
     useContext(LinkContext);

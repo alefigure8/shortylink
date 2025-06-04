@@ -1,14 +1,15 @@
-import LinkForm from "../form/LinkForm.jsx";
-import SuccedLinkCreated from "../alerts/SuccedLinkCreated.jsx";
+import LinkForm from "../component/form/LinkForm.jsx";
+import SuccedLinkCreated from "../component/alerts/SuccedLinkCreated.jsx";
 import { useContext } from "react";
-import { LinkContext } from "../../context/LinkCreateContext.js";
+import { LinkContext } from "../context/LinkCreateContext.js";
+import "../styles/pages/Main.css";
+import "../styles/pages/Login.css";
 
-function MainContent() {
-
+function Main() {
   const { response } = useContext(LinkContext);
   return (
     <>
-      <main className="container">
+      <div className="main-container">
         <div className="main-section">
           <div className="main-content">
             <h1>Linky - Shorter Urls</h1>
@@ -22,16 +23,14 @@ function MainContent() {
               reprehenderit ab optio?
             </p>
           </div>
-          <LinkForm/>
+          <LinkForm />
           <div className="form-wrapper">
-            {response && (
-              <SuccedLinkCreated response={response} />
-            )}
+            {response && <SuccedLinkCreated response={response} />}
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }
 
-export default MainContent;
+export default Main;
