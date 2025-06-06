@@ -1,0 +1,30 @@
+:root {
+  /* GENERALS */
+  --primary-color: #dfc83b;
+  --secondary-color: #083645;
+  --background-color: #031c34;
+  --text-title-color: #dfc83b;
+  --text-color: #ddd;
+  
+  /* MAIN */
+  --main-background-color: #083645;
+  
+  /* LINK */
+  --link-background-color: #031c34;
+  --text-linkform-color: #dfc83b;
+  --link-background-color-table: #ddd;
+
+  /* SIZES */
+  --nav-height: 60px;
+  --conteiner-width: 900px;
+
+  /* DASHBOARDS */
+  --dashboard-secondary-color: #72947b;
+  --dashboard-background-color: #ddd;
+  --dashboard-text-color: #444;
+
+  /* SIDEBAR*/
+    --sidebar-background-color: #031c34;
+    --sidebar-text-color: #ddd;
+    --sidebar-secondary-color: #dfc83b;
+}

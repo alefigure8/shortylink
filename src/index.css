@@ -1,3 +1,6 @@
+@import url('./styles/variables.css');
+
+
 /* Reset básico */
 * {
   margin: 0;

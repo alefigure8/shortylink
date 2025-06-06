@@ -9,12 +9,25 @@ import { mapErrorResponse } from "../util/errorUtil";
 
 function mapLinkResponseToDto(response) {
   return {
+    id: response.id,
     shortUrl: response.shortUrl,
     originalUrl: response.originalUrl,
     name: response.name,
+    accessCount: response.accessCount || 0,
+    createdAt: response.createdAt || null,
+    isActive: response.isActive || false,
+
   };
 }
 
+function maplinksResponseToDto(response) {
+    return {
+    email: response.email,
+    fullName: response.fullName,
+    totalLinks: response.totalLinks,
+    links: response.links.map(link => mapLinkResponseToDto(link)),
+  };
+}
 
 /**
  * 
@@ -22,8 +35,7 @@ function mapLinkResponseToDto(response) {
  * } param0 
  * @returns 
  */
-export default async function createLink({ originalurl, name, token = null }) {
-  console.log("Entramos")
+export async function createLink({ originalurl, name, token = null }) {
   let response = await fetch(`${baseUrl}/link`, {
     method: "POST",
     headers: {
@@ -43,4 +55,22 @@ export default async function createLink({ originalurl, name, token = null }) {
 
   const rawData = await response.json();
   return mapLinkResponseToDto(rawData);
+}
+
+export async function getLinks({token = null}) {
+  let response = await fetch(`${baseUrl}/link`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+
+  if (!response.ok) {
+    const errorDto = await mapErrorResponse(response);
+    throw errorDto;
+  }
+
+  const rawData = await response.json();
+  return maplinksResponseToDto(rawData);
 }

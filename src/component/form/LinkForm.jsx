@@ -1,14 +1,15 @@
 import ErrorAlert from "../alerts/ErrorAlert.jsx";
 import { useEffect } from "react";
-import { LinkContext } from "../../context/LinkCreateContext.js";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { SessionContext } from "../../context/sessionContext.js";
-import "../../styles/component/LinkForm.css"
+import useLinkCreate from "../../hooks/useLinkCreate.js";
+import useSession from "../../hooks/useSession.js";
+import "../../styles/component/LinkForm.css";
+
 function LinkForm() {
   const { form, error, setError, handleInputChange, handleButtonClick } =
-    useContext(LinkContext);
-  const { session } = useContext(SessionContext);
+    useLinkCreate();
+  const { session } = useSession();
+
   useEffect(() => {
     setTimeout(() => {
       setError(null);

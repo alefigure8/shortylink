@@ -1,17 +1,9 @@
-:root {
-  --primary-color: #4caf50;
-  --secondary-color: #444;
-  --background-color: #333;
-  --text-color: #fff;
-  --nav-height: 60px;
-  --conteiner-width: 900px;
-}
+@import url('./styles/variables.css');
 
 main {
   grid-area: main;
   padding-top: calc(var(--nav-height));
   background-color: var(--background-color);
-  color: var(--text-color);
   display: flex;
   min-height: calc(100vh - calc(var(--nav-height)));
 }
@@ -19,10 +11,10 @@ main {
 footer {
   grid-area: footer;
   background-color: var(--secondary-color);
-  color: var(--text-color);
   padding: 20px;
   text-align: center;
   width: 100%;
+  color: white;
 }
 
 p {

@@ -1,11 +1,4 @@
-:root {
-  --primary-color: #4696e5;
-  --secondary-color: #444;
-  --background-color: #333;
-  --text-color: #fff;
-  --nav-height: 60px;
-  --conteiner-width: 900px;
-}
+@import url('../variables.css');
 
 .lateral-nav {
   background-color: var(--secondary-color);

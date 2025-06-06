@@ -1,18 +1,17 @@
 import LinkForm from "../component/form/LinkForm.jsx";
 import SuccedLinkCreated from "../component/alerts/SuccedLinkCreated.jsx";
-import { useContext } from "react";
-import { LinkContext } from "../context/LinkCreateContext.js";
 import "../styles/pages/Main.css";
 import "../styles/pages/Login.css";
+import useLinkCreate from "../hooks/useLinkCreate.js";
 
 function Main() {
-  const { response } = useContext(LinkContext);
+  const { response } = useLinkCreate();
+  
   return (
-    <>
-      <div className="main-container">
+    <div className="main-container">
         <div className="main-section">
           <div className="main-content">
-            <h1>Linky - Shorter Urls</h1>
+            <h1 className="text-title-color">Linky - Shorter Urls</h1>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore
               iure libero soluta dicta quisquam exercitationem qui!
@@ -28,8 +27,7 @@ function Main() {
             {response && <SuccedLinkCreated response={response} />}
           </div>
         </div>
-      </div>
-    </>
+    </div>
   );
 }
 

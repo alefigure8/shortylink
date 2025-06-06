@@ -34,14 +34,16 @@ function Nav() {
           {session?.email ? (
             <ul>
               <li>
-                <p>{session.email}</p>
+                <Link to="/account">
+                  {session.email}
+                  </Link>
               </li>
               <li><a onClick={() => handleLogout()}>Logout</a></li>
             </ul>
           ) : (
             <ul>
               <li>
-                <Link to="/login" className="text-blue-500 hover:underline">
+                <Link to="/login">
                   Iniciar Sesión
                 </Link>
               </li>

@@ -1,14 +1,4 @@
-:root {
-  --primary-color: #4caf50;
-  --dashboard-secondary-color: #4696e5;
-  --secondary-color: #444;
-  --dashboard-background-color: #fff;
-  --dashboard-text-color: #444;
-  --background-color: #333;
-  --text-color: #fff;
-  --nav-height: 60px;
-  --conteiner-width: 900px;
-}
+@import url('../../variables.css');
 
 .dashboard-main-container
 {
@@ -26,7 +16,6 @@
   padding: 20px;
   border-radius: 10px;
   box-sizing: border-box;
-  border: 1px solid var(--dashboard-secondary-color);
   width: 100%;
 }
 
@@ -66,4 +55,43 @@
   font-size: 2rem;
   color: var(--dashboard-secondary-color);
   text-align: center;
+}
+
+.dashboard-Links-List
+{
+  background-color: var(--link-background-color-table);
+  color: var(--dashboard-text-color);
+  padding: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.link-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.link-table thead {
+  background-color: var(--link-background-color-table);
+}
+
+.link-table th,
+.link-table td {
+  padding: 8px 12px;
+  text-align: left;
+  background-color: var(--link-background-color-table);
+}
+
+.link-table th {
+  border-bottom: 1px solid #333;
+}
+
+.link-modify
+{
+  color: #333;
+  font-weight: bold;
 }

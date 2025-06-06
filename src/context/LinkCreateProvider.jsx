@@ -1,7 +1,7 @@
 // LinkProvider.jsx
 import { useContext, useState } from "react";
 import { LinkContext } from "./LinkCreateContext.js";
-import createLink from "../service/linkService.js"; 
+import {createLink} from "../service/linkService.js"; 
 import { SessionContext } from "./sessionContext.js";
 
 export function LinkProvider({ children }) {
