@@ -1,8 +1,12 @@
+import "../../styles/component/Spinner.css"
+
 function Spinner()
 {
     return(
         <>
-            <p>Espere...</p>
+        <div className="spinnerContent">
+            <span className="loader"></span>
+        </div>
         </>
     )
 }

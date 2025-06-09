@@ -18,8 +18,6 @@ function LinkForm() {
 
   return (
     <>
-      <div className="input-section">
-        <label htmlFor="inputText">Escribe algo:</label>
         <input
           type="text"
           id="originalurl"
@@ -49,7 +47,6 @@ function LinkForm() {
           </div>
         )}
         {error && <ErrorAlert error={error} />}
-      </div>
     </>
   );
 }

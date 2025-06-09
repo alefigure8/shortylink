@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/sessionContext";
 import { saveSession } from "../service/sessionService";
 import { loginService } from "../service/loginService";
+import { isTokenExpired } from "../util/tokenUtil";
 
 function useLogin() {
   const navigate = useNavigate();
@@ -27,6 +28,11 @@ function useLogin() {
     setLoginError(null);
     try {
       const response = await loginService(dataForm);
+
+      if(isTokenExpired(response)) {
+        throw new Error("Token expirado, por favor inicia sesión nuevamente.");
+      }
+      
       saveSession(response);
       updateSession(response);
       navigate("/account");

@@ -16,7 +16,7 @@ function mapLinkResponseToDto(response) {
     accessCount: response.accessCount || 0,
     createdAt: response.createdAt || null,
     isActive: response.isActive || false,
-
+    lastAccessedAt: response.lastAccessedAt || null
   };
 }
 

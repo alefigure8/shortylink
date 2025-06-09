@@ -95,3 +95,33 @@
   color: #333;
   font-weight: bold;
 }
+
+.dashboard-create-content
+{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard-create-content button
+{
+  padding: 10px;
+  background-color: var(--button-primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dashboard-create-content button:hover
+{
+  background-color: var(--button-secondary-color);
+}
+
+.dashboard-Links-List label,
+.dashboard-create-content label
+{
+  font-size: 1rem;
+  color: var(--dashboard-text-color);
+  font-weight: bold;
+}

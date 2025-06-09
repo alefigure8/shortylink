@@ -2,9 +2,12 @@
   /* GENERALS */
   --primary-color: #dfc83b;
   --secondary-color: #083645;
+  --tertiary-color: #0c536b;
   --background-color: #031c34;
   --text-title-color: #dfc83b;
   --text-color: #ddd;
+  --success-color: #1c819f;
+  --error-color: #f44336;
   
   /* MAIN */
   --main-background-color: #083645;
@@ -27,4 +30,11 @@
     --sidebar-background-color: #031c34;
     --sidebar-text-color: #ddd;
     --sidebar-secondary-color: #dfc83b;
+
+  /* BUTTONS */
+  --button-primary-color: #1c819f;
+  --button-secondary-color: #0c536b;
+  --button-cancel-color: #f44336;
+  --button-cancel-hover-color: #d32f2f;
+  
 }

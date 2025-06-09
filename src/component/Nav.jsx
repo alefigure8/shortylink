@@ -1,13 +1,11 @@
-import React, { useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { SessionContext } from "../context/SessionContext.js";
-import "../styles/component/Nav.css"
+import "../styles/component/Nav.css";
+import useSession from "../hooks/useSession.js";
 
 function Nav() {
-  const { session, logout } = useContext(SessionContext);
+  const { session, logout } = useSession();
 
-  function handleLogout()
-  {
+  function handleLogout() {
     logout(null);
   }
 
@@ -17,16 +15,9 @@ function Nav() {
         <div className="nav-options">
           <ul>
             <li>
-              <a href="/">Inicio</a>
-            </li>
-            <li>
-              <a href="#about">Acerca de</a>
-            </li>
-            <li>
-              <a href="#services">Servicios</a>
-            </li>
-            <li>
-              <a href="#contact">Contacto</a>
+              <a href="/" className="nav-title">
+                LNKY
+              </a>
             </li>
           </ul>
         </div>
@@ -34,18 +25,16 @@ function Nav() {
           {session?.email ? (
             <ul>
               <li>
-                <Link to="/account">
-                  {session.email}
-                  </Link>
+                <Link to="/account/profile">{session.email}</Link>
               </li>
-              <li><a onClick={() => handleLogout()}>Logout</a></li>
+              <li>
+                <a onClick={() => handleLogout()}>Logout</a>
+              </li>
             </ul>
           ) : (
             <ul>
               <li>
-                <Link to="/login">
-                  Iniciar Sesión
-                </Link>
+                <Link to="/login">Iniciar Sesión</Link>
               </li>
             </ul>
           )}
