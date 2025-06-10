@@ -1,8 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/sessionContext";
-import { saveSession } from "../service/sessionService";
-import { loginService } from "../service/loginService";
+import { saveSession, loginService } from "../service/sessionService";
 import { isTokenExpired } from "../util/tokenUtil";
 
 function useLogin() {

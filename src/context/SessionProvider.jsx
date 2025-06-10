@@ -4,6 +4,8 @@ import {
   getSession,
   saveSession,
   clearSession,
+  logoutService,
+  refreshTokenService,
 } from "../service/sessionService";
 
 export function SessionProvider({ children }) {
@@ -27,15 +29,24 @@ export function SessionProvider({ children }) {
     setIsAuthenticated(true);
   };
 
-  const logout = () => {
+  const logout = async () => {
     clearSession();
     setSession(null);
     setIsAuthenticated(false);
+    await logoutService(session);
+  };
+
+  const refresh = async () => {
+    const currentSession = await refreshTokenService(session);
+    if (currentSession) {
+      updateSession(currentSession);
+    }
+    setLoading(false);
   };
 
   return (
     <SessionContext.Provider
-      value={{ session, loading, isAuthenticated, updateSession, logout }}
+      value={{ session, loading, isAuthenticated, updateSession, logout, refresh }}
     >
       {children}
     </SessionContext.Provider>

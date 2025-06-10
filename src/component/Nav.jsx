@@ -5,8 +5,9 @@ import useSession from "../hooks/useSession.js";
 function Nav() {
   const { session, logout } = useSession();
 
-  function handleLogout() {
+  async function handleLogout() {
     logout(null);
+    
   }
 
   return (
