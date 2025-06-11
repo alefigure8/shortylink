@@ -9,3 +9,21 @@
   width: 200px;
 }
 
+.lateral-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+
+.lateral-nav-li {
+  margin: 0;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.lateral-nav-li:hover {
+  background-color: var(--nav-hover-color);
+}

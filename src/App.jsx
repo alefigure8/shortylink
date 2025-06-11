@@ -7,12 +7,13 @@ import { UserProvider } from "./context/UserProvider.jsx";
 import DashboardLayout from "./layout/DashboardLayout.jsx";
 import DashboardLink from "./pages/dashboard/DashboardLink.jsx";
 import DashboardMain from "./pages/dashboard/DashboardMain.jsx";
-import Error404 from "./pages/Error404.jsx";
+import Error404 from "./pages/public/Error404.jsx";
 import Layout from "./layout/Layout.jsx";
-import Login from "./pages/Login.jsx";
-import Main from "./pages/Main.jsx";
+import Login from "./pages/public/Login.jsx";
+import Main from "./pages/public/Main.jsx";
 import Profile from "./pages/dashboard/profile/Profile.jsx";
 import ProtectedRoute from "./layout/ProtectedRoute.jsx";
+import Register from "./pages/public/Register.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<Layout />}>
                 {/* Páginas públicas dentro del Layout */}
                 <Route index element={<Main />} />
+                <Route path="register" element={<Register />} />
                 <Route path="*" element={<Error404 />} />
 
                 {/* Protegidas */}

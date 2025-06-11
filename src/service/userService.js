@@ -1,18 +1,9 @@
-import { mapErrorResponse } from "../util/errorUtil";
+import { TokenResponseDTO } from "../DTO/TokenResponsDTO.js";
+import { UserResponseDTO } from "../DTO/UserResponseDTO.js";
+import { ErrorResponse } from "../util/errorUtil.js";
 
-// DTO para mapear la respuesta de error
-function mapUserResponseToDto(response) {
-  return {
-    email: response?.email || "",
-    fullName: response?.fullName || "",
-    firstName: response?.firstName || "",
-    lastName: response?.lastName || "",
-    profilePictureUrl: response?.profilePictureUrl || "",
-    totalLinks: response?.totalLinks || 0,
-  };
-}
 
-// Funcion para obtener los datos del usuario
+// GET USER
 export async function getUser(token) {
   const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -25,16 +16,16 @@ export async function getUser(token) {
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
 
   const userData = await response.json();
-  const userDto = mapUserResponseToDto(userData);
+  const userDto = UserResponseDTO(userData);
   return userDto;
 }
 
-// Funcion para actualizar los datos del usuario
+// UPDATE USER SERVICE
 export async function updateUser(token, userData) {
   const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -54,7 +45,31 @@ export async function updateUser(token, userData) {
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
+}
+
+// REGISTER USER SERVICE
+export async function registerUser(userData) {
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const response = await fetch(`${baseUrl}/account/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      password: userData.password,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorDto = await ErrorResponse(response);
+    throw errorDto;
+  }
+
+  return TokenResponseDTO(await response.json());
 }

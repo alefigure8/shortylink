@@ -12,6 +12,7 @@ export function LinkProvider({ children }) {
   const [form, setForm] = useState({
     originalurl: "",
     name: "",
+    customName: ""
   });
 
   // Estado para almacenar la respuesta del servidor y errores
@@ -36,6 +37,7 @@ export function LinkProvider({ children }) {
       const response = await createLink({
         originalurl: form.originalurl,
         name: form.name,
+        customName: form.customName,
         token: session?.token || null
       });
       setResponse(response);

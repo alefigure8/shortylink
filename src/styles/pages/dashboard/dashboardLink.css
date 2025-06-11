@@ -1,0 +1,92 @@
+@import url("../../variables.css");
+
+.link-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.card-link {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  transition: transform 0.2s ease;
+}
+
+.card-link-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #111827;
+  font-weight: bold;
+}
+
+.card-link p {
+  font-size: 0.95rem;
+  color: #374151;
+  margin: 0.25rem 0;
+}
+
+.card-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.card-link button {
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.card-button-modify {
+  background-color: var(--button-primary-color); /* Blue */
+}
+
+.card-button-modify:hover {
+  background-color: var(--button-primary-color-hover); /* Darker Blue */
+}
+
+.card-button-delete {
+  background-color: var(--button-cancel-color); /* Red */
+}
+
+.card-button-delete:hover {
+  background-color: var(--button-cancel-color-hover); /* Darker Red */
+}
+
+.card-button-pause {
+  background-color: var(--button-secondary-color); /* Yellow */
+}
+
+.card-button-pause:hover {
+  background-color: var(--button-secondary-color-hover); /* Darker Yellow */
+}
+
+.card-item {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.card-item label {
+    flex: 1;
+    font-weight: bold;
+  color: #6b7280;
+}
+
+.card-item p {
+  flex: 3;
+  margin: 0;
+  color: #374151;
+}

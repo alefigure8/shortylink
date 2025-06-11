@@ -1,5 +1,5 @@
-import "../styles/pages/Login.css"
-import useLogin from "../hooks/useLogin.js"
+import "../../styles/pages/Login.css"
+import useLogin from "../../hooks/useLogin.js"
 
 function Login() {
   const { dataForm, loginError, handleSubmit, inputFormHandle } = useLogin();

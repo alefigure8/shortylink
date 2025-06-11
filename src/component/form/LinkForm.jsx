@@ -23,26 +23,33 @@ function LinkForm() {
           id="originalurl"
           value={form?.originalurl}
           onChange={(e) => handleInputChange(e)}
-          placeholder="https://ejemplo.com"
+          placeholder="Source Link (https://ejemplo.com)"
         />
         <input
           type="text"
           id="name"
           value={form?.name}
           onChange={(e) => handleInputChange(e)}
-          placeholder="Nombre del enlace"
+          placeholder="Name"
         />
+        {session && (        <input
+          type="text"
+          id="customName"
+           value={form?.customName}
+          onChange={(e) => handleInputChange(e)}
+          placeholder="Custom name"
+        />)}
         <button type="button" onClick={() => handleButtonClick()}>
           Crear Enlace
         </button>
         {!session && (
           <div className="login-link">
             <Link to="/register" className="text-blue-500 hover:underline">
-              Crear usuario
+              Create user
             </Link>
             <span> | </span>
             <Link to="/login" className="text-blue-500 hover:underline">
-              Iniciar Sesión
+              Init Session
             </Link>
           </div>
         )}

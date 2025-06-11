@@ -1,8 +1,8 @@
-import LinkForm from "../component/form/LinkForm.jsx";
-import SuccedLinkCreated from "../component/alerts/SuccedLinkCreated.jsx";
-import "../styles/pages/Main.css";
-import "../styles/pages/Login.css";
-import useLinkCreate from "../hooks/useLinkCreate.js";
+import LinkForm from "../../component/form/LinkForm.jsx";
+import SuccedLinkCreated from "../../component/alerts/SuccedLinkCreated.jsx";
+import "../../styles/pages/Main.css";
+import "../../styles/pages/Login.css";
+import useLinkCreate from "../../hooks/useLinkCreate.js";
 
 function Main() {
   const { response } = useLinkCreate();

@@ -6,8 +6,9 @@ function Sidebar()
 
     return(<>
         <div className="lateral-nav ">
-            <ul>
-                <li>
+            <ul className="lateral-nav-ul">
+                <li className="lateral-nav-li">
+                    <i class="fa-solid fa-house"></i>
                    <Link to="/account"> Overviwe</Link>
                 </li>
             </ul>

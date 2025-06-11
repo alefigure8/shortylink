@@ -3,7 +3,7 @@
  * @param {Response} response - The response object from the fetch request.
  * @return {Promise<Object>} A promise that resolves to an error DTO containing status, message, and details.
  * */
-export async function mapErrorResponse(response) {
+export async function ErrorResponse(response) {
   let errorDto = {
     status: response.status,
     message: "Error desconocido",

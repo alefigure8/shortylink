@@ -1,4 +1,6 @@
 import { isTokenExpired } from "../util/tokenUtil";
+import { ErrorResponse } from "../util/errorUtil.js";
+import { TokenResponseDTO } from "../DTO/TokenResponsDTO.js";
 
 export function saveSession(session) {
   localStorage.setItem("session", JSON.stringify(session));
@@ -15,20 +17,12 @@ export function getSession() {
   return session ? JSON.parse(session) : null;
 }
 
+// Function to check if the session is valid
 export function clearSession() {
   localStorage.removeItem("session");
 }
 
-import { mapErrorResponse } from "../util/errorUtil.js";
-
-export function mapLoginResponseToDto(response) {
-  return {
-    token: response.token,
-    email: response.email,
-    expiration: new Date(response.expiration),
-  };
-}
-
+// LOGIN SERVICE
 export async function loginService({ email, password }) {
   const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -42,14 +36,15 @@ export async function loginService({ email, password }) {
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
 
   const data = await response.json();
-  return mapLoginResponseToDto(data);
+  return TokenResponseDTO(data);
 }
 
+// LOGOUT SERVICE
 export async function logoutService(token) {
   const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -63,13 +58,14 @@ export async function logoutService(token) {
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
 
   return true;
 }
 
+// REFRESH TOKEN SERVICE
 export async function refreshTokenService(token) {
   const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -83,11 +79,11 @@ export async function refreshTokenService(token) {
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
 
   const data = await response.json();
 
-  return mapLoginResponseToDto(data);
+  return TokenResponseDTO(data);
 }

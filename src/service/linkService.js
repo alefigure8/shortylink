@@ -1,41 +1,11 @@
 const baseUrl = import.meta.env.VITE_API_URL;
-import { mapErrorResponse } from "../util/errorUtil";
+import { LinkResponseDTO } from "../DTO/LinkResponseDTO.js";
+import { LinksResponseDTO } from "../DTO/LinksResponseDTO.js";
+import { ErrorResponse } from "../util/errorUtil";
 
-/**
- * 
- * @param {*} response 
- * @returns 
- */
 
-function mapLinkResponseToDto(response) {
-  return {
-    id: response.id,
-    shortUrl: response.shortUrl,
-    originalUrl: response.originalUrl,
-    name: response.name,
-    accessCount: response.accessCount || 0,
-    createdAt: response.createdAt || null,
-    isActive: response.isActive || false,
-    lastAccessedAt: response.lastAccessedAt || null
-  };
-}
-
-function maplinksResponseToDto(response) {
-    return {
-    email: response.email,
-    fullName: response.fullName,
-    totalLinks: response.totalLinks,
-    links: response.links.map(link => mapLinkResponseToDto(link)),
-  };
-}
-
-/**
- * 
- * @param {
- * } param0 
- * @returns 
- */
-export async function createLink({ originalurl, name, token = null }) {
+// CREATE LINK SERVICE
+export async function createLink({ originalurl, name, customName, token = null }) {
   let response = await fetch(`${baseUrl}/link`, {
     method: "POST",
     headers: {
@@ -45,18 +15,20 @@ export async function createLink({ originalurl, name, token = null }) {
     body: JSON.stringify({
       originalurl: originalurl,
       name: name,
+      customName: customName || null,
     }),
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
 
   const rawData = await response.json();
-  return mapLinkResponseToDto(rawData);
+  return LinkResponseDTO(rawData);
 }
 
+// GET ALL LINKS
 export async function getLinks({token = null}) {
   let response = await fetch(`${baseUrl}/link`, {
     method: "GET",
@@ -67,10 +39,29 @@ export async function getLinks({token = null}) {
   });
 
   if (!response.ok) {
-    const errorDto = await mapErrorResponse(response);
+    const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
 
   const rawData = await response.json();
-  return maplinksResponseToDto(rawData);
+  return LinksResponseDTO(rawData);
+}
+
+// GET LINK BY ID
+export async function getLinkById(id, token = null) {
+  let response = await fetch(`${baseUrl}/link/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token.token}` : "",
+    },
+  });
+
+  if (!response.ok) {
+    const errorDto = await ErrorResponse(response);
+    throw errorDto;
+  }
+
+  const rawData = await response.json();
+  return LinkResponseDTO(rawData);
 }
