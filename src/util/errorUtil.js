@@ -7,7 +7,7 @@ export async function ErrorResponse(response) {
   let errorDto = {
     status: response.status,
     message: "Error desconocido",
-    details: null,
+    details: response.message || null,
   };
 
   try {

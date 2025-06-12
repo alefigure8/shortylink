@@ -8,7 +8,7 @@ function Sidebar()
         <div className="lateral-nav ">
             <ul className="lateral-nav-ul">
                 <li className="lateral-nav-li">
-                    <i class="fa-solid fa-house"></i>
+                    <i className="fa-solid fa-house"></i>
                    <Link to="/account"> Overviwe</Link>
                 </li>
             </ul>

@@ -19,7 +19,7 @@ export function LinksProvider({ children }) {
     lastAccessedAt: null,
   });
 
-  const [link, setLinks] = useState({
+  const [link, setLink] = useState({
     shortUrl: "",
     originalUrl: "",
     name: "",
@@ -47,8 +47,7 @@ export function LinksProvider({ children }) {
 
   const linkById = async (id) => {
     var link = await getLinkById(id, session);
-    setLinks(link);
-    setLoadingLink(false);
+    setLink(link);
   };
 
   return (
@@ -58,7 +57,9 @@ export function LinksProvider({ children }) {
         userLinks,
         linkById,
         loadingLink,
-        link
+        setLoadingLink,
+        link,
+        setLink
       }}
     >
       {children}
