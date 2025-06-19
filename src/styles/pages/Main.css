@@ -158,29 +158,26 @@ body, .main-section {
 }
 
 .features-cards {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2.5rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .feature-card {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.10);
-  padding: 38px 32px 32px 32px;
-  min-width: 260px;
-  max-width: 340px;
-  flex: 1 1 260px;
+  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: box-shadow 0.18s, transform 0.13s;
   border: 1.5px solid #f0e6d2;
+  min-height: 280px;
 }
 
 .feature-card:hover {
@@ -192,44 +189,45 @@ body, .main-section {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #fff;
+  background: linear-gradient(135deg, #ffb800, #ffd600);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
+  margin-bottom: 1.5rem;
   border: 2px solid #ffb80022;
+  box-shadow: 0 4px 16px rgba(255, 184, 0, 0.2);
 }
 
 .feature-icon i {
-  font-size: 2.1rem;
-  color: #ff4d6d;
+  font-size: 1.8rem;
+  color: #fff;
 }
 
 .feature-card h3 {
-  font-size: 1.18rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #22223b;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   letter-spacing: 0.5px;
 }
 
 .feature-card p {
   color: #7a7a7a;
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin: 0;
   font-weight: 400;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
   .features-cards {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
-    align-items: center;
+    padding: 0 1rem;
   }
   .feature-card {
-    min-width: 0;
-    width: 98vw;
-    max-width: 400px;
+    min-height: auto;
+    padding: 1.5rem 1rem;
   }
 }
 

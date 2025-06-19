@@ -9,7 +9,7 @@ function Main() {
   const { response } = useLinkCreate();
   const mainSectionRef = useRef(null);
   const featuresRef = useRef(null);
-  const { scrolled, setScrolled } = useOutletContext();
+  const { setScrolled } = useOutletContext();
 
   // Scroll a la sección de features
   const scrollToFeatures = () => {
@@ -59,8 +59,70 @@ function Main() {
           {response && <SuccedLinkCreated response={response} />}
         </div>
       </section>
-      <section className="features-section">
-
+      <section className="features-section" id="features" ref={featuresRef}>
+        <h2 className="features-title">Características del Shortener</h2>
+        <div className="features-cards">
+          <div className="feature-card">
+            <div className="feature-icon">
+              <i className="fas fa-link"></i>
+            </div>
+            <h3>URLs Personalizadas</h3>
+            <p>
+              Crea enlaces cortos con nombres personalizados que sean fáciles de
+              recordar y compartir.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <i className="fas fa-chart-bar"></i>
+            </div>
+            <h3>Estadísticas Detalladas</h3>
+            <p>
+              Analiza el rendimiento de tus enlaces con clicks, ubicaciones
+              geográficas y dispositivos utilizados.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <i className="fas fa-clock"></i>
+            </div>
+            <h3>Enlaces con Expiración</h3>
+            <p>
+              Configura fechas de expiración para tus enlaces y mantén el
+              control total sobre su acceso.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <i className="fas fa-qrcode"></i>
+            </div>
+            <h3>Códigos QR</h3>
+            <p>
+              Genera automáticamente códigos QR para cada enlace y facilita el
+              compartir en redes sociales.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <i className="fas fa-users"></i>
+            </div>
+            <h3>Compartir Fácilmente</h3>
+            <p>
+              Comparte tus enlaces directamente en WhatsApp, Twitter, Facebook y
+              otras redes sociales.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <i className="fas fa-shield-alt"></i>
+            </div>
+            <h3>Enlaces Seguros</h3>
+            <p>
+              Todos los enlaces están protegidos con HTTPS y verificados contra
+              malware automáticamente.
+            </p>
+          </div>
+        </div>
       </section>
     </>
   );
