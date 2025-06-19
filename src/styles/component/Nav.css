@@ -1,13 +1,9 @@
 @import url("../variables.css");
 
 nav {
-  grid-area: header;
   background: #fff;
   height: var(--nav-height);
-  position: sticky;
-  top: 0;
   width: 100%;
-  z-index: 1000;
   padding: 0 32px;
   display: flex;
   align-items: center;
@@ -15,6 +11,11 @@ nav {
   box-shadow: 0 2px 12px 0 rgba(44, 62, 80, 0.08);
   border-bottom: 1px solid #e0e8f3;
   transition: background 0.4s, color 0.4s;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .nav-user {
@@ -134,9 +135,6 @@ nav {
 .nav--scrolled {
   background: var(--secondary-color) !important;
   color: #fff !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1000 !important;
   transition: background 0.4s, color 0.4s;
 }
 

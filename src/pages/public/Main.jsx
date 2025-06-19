@@ -7,7 +7,6 @@ import { useOutletContext } from "react-router-dom";
 
 function Main() {
   const { response } = useLinkCreate();
-  const mainSectionRef = useRef(null);
   const featuresRef = useRef(null);
   const { setScrolled } = useOutletContext();
 
@@ -17,20 +16,17 @@ function Main() {
     if (section) section.scrollIntoView({ behavior: "smooth" });
   };
 
-  window.addEventListener("scroll", console.log("SCROLLLLL"));
-
   useEffect(() => {
     function handleScroll() {
-      console.log("Scroll");
-      if (!featuresRef.current || !mainSectionRef.current) return;
-      const featuresTop = featuresRef.current.getBoundingClientRect().top;
-      const navHeight = 60; // igual a var(--nav-height)
-      setScrolled(featuresTop <= navHeight + 20);
+      const scrollY = window.scrollY;
+      const threshold = 900; // Umbral para cambiar el color del nav
+      
+      // Cambiar color cuando el scroll pasa del umbral
+      setScrolled(scrollY > threshold);
     }
 
     window.addEventListener("scroll", handleScroll);
-
-    handleScroll();
+    handleScroll(); // Ejecutar una vez al montar
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -40,27 +36,58 @@ function Main() {
   return (
     <>
       <section className="main-section">
+      <h2 className="main-title">LNKY</h2>
+      <div className="main-crds">
         <div className="main-hero">
-          <div className="main-logo">LNKY</div>
           <h1>Acorta tus links de forma inteligente</h1>
+          <h3 className="hero-subtitle">La plataforma más avanzada para acortar URLs</h3>
           <p className="main-subtitle">
             Simplifica, comparte y analiza tus enlaces con{" "}
-            <span className="brand">LNKY</span>
+            <span className="brand">LNKY</span>. Crea enlaces cortos, personalizados y seguros en segundos.
           </p>
-          <button className="features-scroll-btn" onClick={scrollToFeatures}>
-            Ver características
-          </button>
+          <div className="hero-features">
+            <span className="hero-feature">✓ URLs Personalizadas</span>
+            <span className="hero-feature">✓ Estadísticas Detalladas</span>
+            <span className="hero-feature">✓ Códigos QR</span>
+          </div>
+          <div className="hero-button-container">
+            <button className="features-scroll-btn" onClick={scrollToFeatures}>
+              Ver características
+            </button>
+          </div>
         </div>
         <div className="main-form-card">
-          <label htmlFor="inputText" className="input-label">
-            Pega tu enlace aquí:
-          </label>
-          <LinkForm />
-          {response && <SuccedLinkCreated response={response} />}
+          <div className="form-header">
+            <h3 className="form-title">¡Crea tu link corto ahora!</h3>
+            <p className="form-subtitle">100% Gratis • Sin registro requerido</p>
+          </div>
+          <div className="form-steps">
+            <div className="form-step">
+              <span className="step-number">1</span>
+              <span className="step-text">Pega tu enlace largo</span>
+            </div>
+            <div className="form-step">
+              <span className="step-number">2</span>
+              <span className="step-text">Elige un nombre personalizado (opcional)</span>
+            </div>
+            <div className="form-step">
+              <span className="step-number">3</span>
+              <span className="step-text">¡Listo! Tu link corto está listo</span>
+            </div>
+          </div>
+          <div className="form-container">
+            <label htmlFor="inputText" className="input-label">
+              Pega tu enlace aquí:
+            </label>
+            <LinkForm />
+            {response && <SuccedLinkCreated response={response} />}
+          </div>
+       
         </div>
+      </div>
       </section>
       <section className="features-section" id="features" ref={featuresRef}>
-        <h2 className="features-title">Características del Shortener</h2>
+        <h2 className="features-title">LNKY</h2>
         <div className="features-cards">
           <div className="feature-card">
             <div className="feature-icon">

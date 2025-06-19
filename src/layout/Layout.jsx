@@ -6,10 +6,6 @@ import { useState } from "react";
 
 function Layout() {
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
-
-  // Si estamos en la home, pasamos el setter a Main
-  const isHome = location.pathname === "/";
 
   return (
     <div className="layout">
@@ -17,11 +13,7 @@ function Layout() {
         <Nav scrolled={scrolled} />
       </header>
       <main className="layout-content">
-        {isHome ? (
           <Outlet context={{ scrolled, setScrolled }} />
-        ) : (
-          <Outlet />
-        )}
       </main>
       <footer className="layout-footer">
         <Footer />
