@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function LinkList({userLinks}) {
+function LinkList({userLinks, onToggleActive}) {
   return (
     <>
       <table className="link-table" >
@@ -11,6 +11,7 @@ function LinkList({userLinks}) {
             <th>Url Shrink</th>
             <th>Created</th>
             <th>Visits</th>
+            <th>Activo</th>
             <th></th>
             <th></th>
           </tr>
@@ -30,11 +31,16 @@ function LinkList({userLinks}) {
               </td>
               <td>{link?.accessCount}</td>
               <td>
-                {link?.isActive ? (
-                  <i className="fa-solid fa-check success-colortext"></i>
-                ) : (
-                  <i className="fa-solid fa-xmark error-colortext"></i>
-                )}
+                <span
+                  className={`switch ${link.isActive ? "active" : "inactive"}`}
+                  title={link.isActive ? "Activo" : "Pausado"}
+                  onClick={() => onToggleActive && onToggleActive(link)}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={link.isActive}
+                >
+                  <span className="switch-slider"></span>
+                </span>
               </td>
               <td>
                 <Link to={`/account/${link.id}`} className="link-modify">

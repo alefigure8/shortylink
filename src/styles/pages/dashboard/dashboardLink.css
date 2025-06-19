@@ -4,89 +4,169 @@
   display: flex;
   justify-content: center;
   padding: 2rem;
+  /* min-height: 100vh; */
 }
 
 .card-link {
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #f8fafc 80%, #e0e7ff 100%);
   border-radius: 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(30, 40, 90, 0.10);
   padding: 2rem;
-  max-width: 500px;
+  max-width: 380px;
   width: 100%;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s;
+  color: var(--dashboard-text-color);
+  border: 1.5px solid #e0e7ff;
+  /* Elimina height/min-height para que se ajuste al contenido */
+}
+
+.card-link-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .card-link-title {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #111827;
   font-weight: bold;
+  margin: 0;
+  flex: none;
 }
 
 .card-link p {
-  font-size: 0.95rem;
-  color: #374151;
+  font-size: 0.98rem;
   margin: 0.25rem 0;
 }
 
-.card-buttons{
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
 }
 
 .card-link button {
-  margin-top: 1rem;
-  margin-right: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   border: none;
-  border-radius: 0.5rem;
-  color: white;
-  font-weight: 500;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(30, 40, 90, 0.08);
+  outline: none;
+  margin: 0 2px;
 }
 
 .card-button-modify {
-  background-color: var(--button-primary-color); /* Blue */
+  background: #38bfa7;
+  color: #fff;
 }
-
 .card-button-modify:hover {
-  background-color: var(--button-primary-color-hover); /* Darker Blue */
+  background: #24907a;
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
 }
 
 .card-button-delete {
-  background-color: var(--button-cancel-color); /* Red */
+  background: #ff6f61;
+  color: #fff;
 }
-
 .card-button-delete:hover {
-  background-color: var(--button-cancel-color-hover); /* Darker Red */
+  background: #d7263d;
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
 }
 
 .card-button-pause {
-  background-color: var(--button-secondary-color); /* Yellow */
+  background: #ffe066;
+  color: #22314a;
 }
-
 .card-button-pause:hover {
-  background-color: var(--button-secondary-color-hover); /* Darker Yellow */
+  background: #e6c200;
+  color: #22314a;
+  transform: translateY(-2px) scale(1.04);
 }
 
 .card-item {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   align-items: center;
 }
 
 .card-item label {
-    flex: 1;
-    font-weight: bold;
-  color: #6b7280;
+  flex: 1;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.card-item-value-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .card-item p {
   flex: 3;
   margin: 0;
-  color: #374151;
+  color: var(--dashboard-text-color);
+  word-break: break-all;
+}
+
+/* Pencil icon styles mejorados */
+.fa-pen {
+  margin-left: 0.2rem;
+  color: var(--button-secondary-color);
+  background: #fff;
+  border-radius: 50%;
+  padding: 0.38em 0.42em;
+  font-size: 1.13em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30, 40, 90, 0.10);
+  transition: background 0.18s, color 0.18s, transform 0.15s, box-shadow 0.2s;
+  vertical-align: middle;
+  border: 2px solid #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fa-pen:hover, .fa-pen:focus {
+  background: var(--button-secondary-color);
+  color: #fff;
+  transform: scale(1.18) rotate(-10deg);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 4px 16px rgba(255, 214, 0, 0.18);
+  outline: none;
+}
+
+/* Mejora de inputs: más contraste y visibilidad */
+input[type="text"], input[type="url"], input:not([type]) {
+  border: 1.5px solid var(--button-secondary-color);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 4px rgba(30,40,90,0.06);
+}
+
+input[type="text"]:focus, input[type="url"]:focus, input:not([type]):focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
+  outline: none;
+  background: #fffbe6;
+}
+
+@media (max-width: 600px) {
+  .card-link {
+    padding: 1rem;
+    max-width: 98vw;
+  }
+  .link-container {
+    padding: 0.5rem;
+  }
 }

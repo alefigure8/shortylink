@@ -89,23 +89,25 @@ function DashboardLink() {
 
   return (
     <>
-      <div className="link-container">
+            <div className="link-container">
         <div className="card-link">
           {!modifyTitle ? (
-            <div>
+            <div className="card-link-title-row">
               <h1 className="card-link-title">{dataForm?.name}</h1>
               <i
                 className="fa-solid fa-pen"
-                onClick={(e) => handleModifyTitle(e)}
+                tabIndex={0}
+                title="Editar título"
+                onClick={handleModifyTitle}
+                onKeyPress={e => (e.key === "Enter" ? handleModifyTitle(e) : null)}
               ></i>
             </div>
           ) : (
             <input
               id="name"
-              onChange={(e) => {
-                handleInput(e);
-              }}
+              onChange={handleInput}
               value={dataForm?.name}
+              autoFocus
             />
           )}
           <div className="card-item">
@@ -115,20 +117,22 @@ function DashboardLink() {
           <div className="card-item">
             <label>Original URL: </label>
             {!modifyLink ? (
-              <div>
-                <p>{dataForm?.originalUrl} </p>
+              <div className="card-item-value-row">
+                <p>{dataForm?.originalUrl}</p>
                 <i
                   className="fa-solid fa-pen"
-                  onClick={(e) => handleModifyLink(e)}
+                  tabIndex={0}
+                  title="Editar URL"
+                  onClick={handleModifyLink}
+                  onKeyPress={e => (e.key === "Enter" ? handleModifyLink(e) : null)}
                 ></i>
               </div>
             ) : (
               <input
                 id="originalUrl"
-                onChange={(e) => {
-                  handleInput(e);
-                }}
+                onChange={handleInput}
                 value={dataForm?.originalUrl}
+                autoFocus
               />
             )}
           </div>
@@ -170,30 +174,26 @@ function DashboardLink() {
             {(modifyLink || modifyTitle) && (
               <button
                 className="card-button-modify"
-                onClick={(e) => handleSubmit(e)}
+                onClick={handleSubmit}
               >
                 Modificar
               </button>
             )}
             {!modifyLink && !modifyTitle && (
               <button
-                onClick={(e) => {
-                  handlePause(e);
-                }}
+                onClick={handlePause}
                 className="card-button-pause"
               >
                 {link.isActive ? "Pause" : "Active"}
               </button>
             )}
             <button
-              onClick={(e) => {
-                handleCancel(e);
-              }}
+              onClick={handleCancel}
               className="card-button-delete"
             >
               {modifyLink || modifyTitle ? "cancelar" : "Eliminar"}
             </button>
-            {message?.ok && <p>{message?.message}</p>} {/*TODO: TERMINAR MENSAJE Y REINICIAR TODO*/}
+            {message?.ok && <p>{message?.message}</p>}
           </div>
         </div>
       </div>

@@ -42,7 +42,7 @@ export function LinkProvider({ children }) {
       });
       setResponse(response);
       setError(null);
-      setForm({ originalurl: "", name: "" }); // Limpiar el formulario después de enviar
+      setForm({ originalurl: "", name: "", customName : "" }); // Limpiar el formulario después de enviar
     } catch (error) {
       setError(error);
       setResponse(null);

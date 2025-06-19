@@ -1,8 +1,20 @@
-@import url('../variables.css');
+@import url("../variables.css");
+.layout-header {
+  grid-area: header;
+  position: relative;
+  z-index: 1000;
+}
+
+.layout-footer {
+  grid-area: footer;
+}
 
 .layout-content {
   grid-area: layout;
-  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 .layout {
@@ -11,6 +23,9 @@
     "header"
     "layout"
     "footer";
-  grid-template-rows: auto 1fr auto;
-  width: 100%;
+  grid-template-rows: var(--nav-height) 1fr auto;
+  width: 100vw;
+  min-height: 100vh;
+  background: none;
+  overflow-x: hidden;
 }

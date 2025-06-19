@@ -4,9 +4,12 @@ import useLinks from "../../hooks/useLinks.js";
 import { Link } from "react-router-dom";
 import LinkForm from "../../component/form/LinkForm.jsx";
 import LinkList from "../../component/dashboard/LinkList.jsx";
+import { updateLink } from "../../service/linkService";
+import useSession from "../../hooks/useSession.js";
 
 function DashboardMain() {
-  const { loadingLinks, userLinks } = useLinks();
+  const { loadingLinks, userLinks, linkById } = useLinks();
+  const { session } = useSession();
 
   function handleTotalVisits() {
     if (userLinks?.email != "") {
@@ -31,6 +34,18 @@ function DashboardMain() {
       }, 0);
     }
     return 0; // o null, según tu lógica
+  }
+
+  async function handleToggleActive(link) {
+    await updateLink({
+      id: link.id,
+      originalUrl: link.originalUrl,
+      name: link.name,
+      isActive: !link.isActive,
+      token: session?.token || null,
+    });
+    if (linkById) linkById(link.id);
+    window.location.reload();
   }
 
   return (
@@ -71,7 +86,7 @@ function DashboardMain() {
           <div className="dashboard-Links-List">
             <label>Urls recientemente creadas</label>
             {userLinks?.totalLinks > 0 ? (
-              <LinkList userLinks = {userLinks} />
+              <LinkList userLinks={userLinks} onToggleActive={handleToggleActive} />
             ) : (
               <p>Aún no hay links. Comience creando uno.</p>
             )}

@@ -1,44 +1,79 @@
-@import url('../variables.css');
-
-.input-section {
-  grid-area: input-section;
-  padding: 20px;
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: var(--link-background-color);
-  border-radius: 10px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.input-section label {
-  color: var(--text-color);
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
 .input-section input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid #e0e7ef;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: var(--dashboard-text-color);
+  margin-bottom: 12px;
+  transition: border-color 0.2s, box-shadow 0.18s, background 0.18s;
+  box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+  outline: none;
+  display: block;
+}
+
+.input-section input:focus {
+  border-color: var(--primary-color);
+  background: #fffbe6;
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .input-section button {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
+  margin-top: 30px;
+  padding: 12px 32px;
+  background: var(--button-primary-color);
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.18s, color 0.18s, transform 0.13s;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: 0.5px;
 }
 
 .input-section button:hover {
-  background-color: #0056b3;
+  background: var(--button-primary-color-hover);
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.login-link-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 10px;
+}
+
+.login-link-btn {
+  color: var(--button-primary-color);
+  background: #f5f7fa;
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.98rem;
+  transition: background 0.18s, color 0.18s;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.login-link-btn:hover {
+  background: var(--button-primary-color);
+  color: #fff;
+}
+
+.login-link-sep {
+  color: #b0b8c9;
+  font-size: 1.1em;
+  padding: 0 0.2em;
 }

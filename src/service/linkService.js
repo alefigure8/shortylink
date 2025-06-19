@@ -6,8 +6,8 @@ import { SuccessResponse } from "../util/successUtil.js";
 
 
 // CREATE LINK SERVICE
-export async function createLink({ id, originalurl, name, customName, token = null }) {
-  let response = await fetch(`${baseUrl}/link/${id}`, {
+export async function createLink({ originalurl, name, customName, token = null }) {
+  let response = await fetch(`${baseUrl}/link/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

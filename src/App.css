@@ -2,7 +2,7 @@
 
 main {
   grid-area: main;
-  padding-top: calc(var(--nav-height));
+  /* padding-top: calc(var(--nav-height)); */
   background-color: var(--background-color);
   display: flex;
   min-height: calc(100vh - calc(var(--nav-height)));
