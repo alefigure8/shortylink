@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 
 function Main() {
-  const { response } = useLinkCreate();
+  const { response, clearResponse } = useLinkCreate();
   const featuresRef = useRef(null);
   const { setScrolled } = useOutletContext();
 
@@ -80,7 +80,7 @@ function Main() {
               Pega tu enlace aquí:
             </label>
             <LinkForm />
-            {response && <SuccedLinkCreated response={response} />}
+            {response && <SuccedLinkCreated response={response} onClose={clearResponse} />}
           </div>
        
         </div>
@@ -147,6 +147,118 @@ function Main() {
             <p>
               Todos los enlaces están protegidos con HTTPS y verificados contra
               malware automáticamente.
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Tecnologías Section */}
+      <section className="tech-section">
+        <h2 className="tech-title">Proyecto de Portfolio</h2>
+        <p className="tech-subtitle">
+          Este es un proyecto desarrollado para demostrar mis habilidades en desarrollo full-stack
+        </p>
+        
+        <div className="tech-cards">
+          <div className="tech-card">
+            <div className="tech-card-icon">
+              <i className="fas fa-code"></i>
+            </div>
+            <h3>Acerca del Proyecto</h3>
+            <p>
+              <strong>LNKY</strong> es una aplicación web completa de acortamiento de URLs que 
+              demuestra mi capacidad para desarrollar soluciones full-stack desde cero. 
+              El proyecto incluye autenticación JWT, gestión de usuarios, análisis de datos 
+              y una interfaz moderna y responsive.
+            </p>
+          </div>
+          
+          <div className="tech-card">
+            <div className="tech-card-icon">
+              <i className="fas fa-cogs"></i>
+            </div>
+            <h3>Características Técnicas</h3>
+            <div className="tech-features-list">
+              <div className="tech-feature-item">
+                <i className="fas fa-shield-alt"></i>
+                <span>Autenticación JWT</span>
+              </div>
+              <div className="tech-feature-item">
+                <i className="fas fa-code"></i>
+                <span>API RESTful</span>
+              </div>
+              <div className="tech-feature-item">
+                <i className="fas fa-database"></i>
+                <span>Entity Framework</span>
+              </div>
+              <div className="tech-feature-item">
+                <i className="fas fa-mobile-alt"></i>
+                <span>Diseño Responsive</span>
+              </div>
+              <div className="tech-feature-item">
+                <i className="fas fa-cogs"></i>
+                <span>Context API</span>
+              </div>
+              <div className="tech-feature-item">
+                <i className="fas fa-check-circle"></i>
+                <span>Validaciones</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="tech-card">
+            <div className="tech-card-icon">
+              <i className="fas fa-server"></i>
+            </div>
+            <h3>Backend</h3>
+            <div className="tech-items">
+              <span className="tech-item">ASP.NET Web API</span>
+              <span className="tech-item">Entity Framework Core</span>
+              <span className="tech-item">SQL Server</span>
+              <span className="tech-item">JWT Authentication</span>
+              <span className="tech-item">AutoMapper</span>
+              <span className="tech-item">FluentValidation</span>
+            </div>
+          </div>
+          
+          <div className="tech-card">
+            <div className="tech-card-icon">
+              <i className="fas fa-desktop"></i>
+            </div>
+            <h3>Frontend</h3>
+            <div className="tech-items">
+              <span className="tech-item">React 18</span>
+              <span className="tech-item">JavaScript ES6+</span>
+              <span className="tech-item">CSS3 & Flexbox/Grid</span>
+              <span className="tech-item">HTML5 Semántico</span>
+              <span className="tech-item">React Router</span>
+              <span className="tech-item">Context API</span>
+            </div>
+          </div>
+          
+          <div className="tech-card">
+            <div className="tech-card-icon">
+              <i className="fas fa-tools"></i>
+            </div>
+            <h3>Herramientas</h3>
+            <div className="tech-items">
+              <span className="tech-item">Git & GitHub</span>
+              <span className="tech-item">Visual Studio 2022</span>
+              <span className="tech-item">VS Code</span>
+              <span className="tech-item">Postman</span>
+              <span className="tech-item">Chrome DevTools</span>
+            </div>
+          </div>
+          
+          <div className="tech-card">
+            <div className="tech-card-icon">
+              <i className="fas fa-lightbulb"></i>
+            </div>
+            <h3>Propósito</h3>
+            <p>
+              Este proyecto demuestra mi capacidad para desarrollar aplicaciones web completas, 
+              desde la arquitectura de base de datos hasta la experiencia de usuario final.
+              Incluye validaciones, manejo de errores y feedback al usuario.
             </p>
           </div>
         </div>

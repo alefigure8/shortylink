@@ -107,6 +107,7 @@ nav {
   display: flex;
   flex-direction: column;
   animation: fadeInMenu 0.18s;
+  border: 1px solid #e0e7ef;
 }
 
 @keyframes fadeInMenu {
@@ -124,12 +125,50 @@ nav {
   text-align: left;
   cursor: pointer;
   border-radius: 6px;
-  transition: background 0.18s, color 0.18s;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .nav-dropdown-item:hover {
-  background: #e0e8f3;
+  background: transparent;
   color: #22314a;
+}
+
+.nav-dropdown-item:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: #e0e7ef;
+}
+
+/* Fix dropdown menu when nav is scrolled */
+.nav--scrolled .nav-dropdown-menu {
+  background: #fff !important;
+  border: 1px solid #e0e7ef;
+  box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.15);
+}
+
+.nav--scrolled .nav-dropdown-item {
+  color: #22314a !important;
+  background: #fff !important;
+}
+
+.nav--scrolled .nav-dropdown-item:hover {
+  background: transparent !important;
+  color: #22314a !important;
+}
+
+.nav--scrolled .nav-dropdown-item:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: #e0e7ef;
 }
 
 .nav--scrolled {
@@ -140,16 +179,14 @@ nav {
 
 .nav--scrolled .nav-title,
 .nav--scrolled .nav-user a,
-.nav--scrolled .nav-user-email,
-.nav--scrolled .nav-dropdown-item {
+.nav--scrolled .nav-user-email {
   color: #fff !important;
   background: transparent;
 }
 
 .nav--scrolled .nav-user a:hover,
 .nav--scrolled .nav-user .nav-btn:hover,
-.nav--scrolled .nav-user-email:focus,
-.nav--scrolled .nav-dropdown-item:hover {
-  background: #22314a;
-  color: #ffd600 !important;
+.nav--scrolled .nav-user-email:focus {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff !important;
 }

@@ -49,8 +49,13 @@ export function LinkProvider({ children }) {
     }
   };
 
+  // Función para limpiar la respuesta (cerrar el alert)
+  const clearResponse = () => {
+    setResponse(null);
+  };
+
   return (
-    <LinkContext.Provider value={{ form, error, setError, response, handleInputChange, handleButtonClick }}>
+    <LinkContext.Provider value={{ form, error, setError, response, handleInputChange, handleButtonClick, clearResponse }}>
       {children}
     </LinkContext.Provider>
   );
