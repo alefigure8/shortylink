@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import useSession from "../hooks/useSession";
 import { getLinkById, getLinks } from "../service/linkService";
 import { LinksContext } from "./LinksContext";
-// import useLinkCreate from "../hooks/useLinkCreate";
 import { isTokenExpired } from "../util/tokenUtil";
+import useLinkCreate from "../hooks/useLinkCreate";
 
 export function LinksProvider({ children }) {
   const [loadingLinks, setLoadingLinks] = useState(true);
   const [loadingLink, setLoadingLink] = useState(true);
   const { session, logout } = useSession();
+  const { clearResponse } = useLinkCreate();
 
   const [userLinks, setUserLinks] = useState({
     shortUrl: "",
@@ -43,7 +44,7 @@ export function LinksProvider({ children }) {
     };
 
     fetchData();
-  }, [session, logout]);
+  }, [session, logout, clearResponse]);
 
   const linkById = async (id) => {
     var link = await getLinkById(id, session);

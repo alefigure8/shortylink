@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../styles/component/Nav.css";
 import useSession from "../hooks/useSession.js";
 import { useState, useRef, useEffect } from "react";
@@ -7,6 +7,7 @@ function Nav({ scrolled }) {
   const { session, logout } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   async function handleLogout() {
     logout(null);
@@ -49,19 +50,18 @@ function Nav({ scrolled }) {
                   className="nav-user-email"
                   tabIndex={0}
                   onClick={() => setMenuOpen((open) => !open)}
-                  onKeyPress={e => (e.key === "Enter" ? setMenuOpen((open) => !open) : null)}
                   style={{ cursor: "pointer" }}
                 >
                   {session.email}
                 </span>
                 {menuOpen && (
                   <div className="nav-dropdown-menu">
-                    <Link to="/account" className="nav-dropdown-item" onClick={() => setMenuOpen(false)}>
+                    <button type="button" className="nav-dropdown-item" onClick={() => { setMenuOpen(false); navigate("/account"); }}>
                       Home
-                    </Link>
-                    <Link to="/account/profile" className="nav-dropdown-item" onClick={() => setMenuOpen(false)}>
+                    </button>
+                    <button type="button" className="nav-dropdown-item" onClick={() => { setMenuOpen(false); navigate("/account/profile"); }}>
                       Profile
-                    </Link>
+                    </button>
                   </div>
                 )}
               </li>

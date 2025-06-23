@@ -1,20 +1,13 @@
 import ErrorAlert from "../alerts/ErrorAlert.jsx";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useLinkCreate from "../../hooks/useLinkCreate.js";
 import useSession from "../../hooks/useSession.js";
 import "../../styles/component/LinkForm.css";
 
 function LinkForm() {
-  const { form, error, setError, handleInputChange, handleButtonClick } =
+  const { form, handleInputChange, handleButtonClick } =
     useLinkCreate();
   const { session } = useSession();
-
-  useEffect(() => {
-    setTimeout(() => {
-      setError(null);
-    }, 5000);
-  }, [error, setError]);
 
   return (
     <div className="input-section">
@@ -55,7 +48,6 @@ function LinkForm() {
           </Link>
         </div>
       )}
-      {error && <ErrorAlert error={error} />}
     </div>
   );
 }

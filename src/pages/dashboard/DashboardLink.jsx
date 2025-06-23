@@ -1,14 +1,13 @@
-import { useParams, useNavigate } from "react-router-dom";
 import useLinks from "../../hooks/useLinks";
 import useSession from "../../hooks/useSession";
 import { useEffect, useState } from "react";
 import Spinner from "../../component/spinner/Spinner";
 import "../../styles/pages/dashboard/DashboardLink.css";
 import { updateLink } from "../../service/linkService";
+import { useParams } from "react-router-dom";
 
 function DashboardLink() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { linkById, link, loadingLink, setLoadingLink } = useLinks();
   const { session } = useSession();
   const [modifyLink, setModifyLink] = useState(false);
@@ -19,11 +18,11 @@ function DashboardLink() {
   // Scroll to top when component mounts or when link changes
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, setLoadingLink]);
 
   useEffect(() => {
     linkById(id);
-  }, [id, setMessage]);
+  }, [id]);
 
   useEffect(() => {
     if (link?.shortUrl !== "") {
@@ -48,14 +47,19 @@ function DashboardLink() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await updateLink({
+    setLoadingLink(true);
+    await updateLink({
       id: link.id,
       originalUrl: dataForm.originalUrl,
       name: dataForm.name,
       isActive: link.isActive,
       token: session?.token || null,
     });
-    console.log(response);
+    await linkById(id);
+    setModifyLink(false);
+    setModifyTitle(false);
+    setLoadingLink(false);
+
   };
 
   const handleInput = (event) => {
@@ -89,12 +93,13 @@ function DashboardLink() {
       isActive: !link.isActive,
       token: session?.token || null,
     });
+    await linkById(id);
     setMessage(response);
     setLoadingLink(false);
   };
 
   const handleGoBack = () => {
-    navigate(-1);
+    window.location.replace("/account");
   };
 
   return (

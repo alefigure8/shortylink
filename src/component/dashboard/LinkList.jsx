@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-function LinkList({userLinks, onToggleActive}) {
+function LinkList({ userLinks, onToggleActive }) {
   return (
     <>
-      <table className="link-table" >
+      <table className="link-table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -19,9 +19,21 @@ function LinkList({userLinks, onToggleActive}) {
         <tbody>
           {userLinks?.links?.map((link) => (
             <tr key={link.id || link.shortUrl}>
-              <td>{link?.name}</td>
-              <td>{link?.originalUrl}</td>
-              <td>{link?.shortUrl}</td>
+              <td title={link?.name != null ? link?.name : "Sin nombre"}>
+                {link?.name != null ? (link?.name?.length > 10
+                  ? link?.name.substr(0, 10) + "..."
+                  : link?.name) : "-" }
+              </td>
+              <td title={link?.originalUrl}>
+                {link?.originalUrl.length > 25
+                  ? link?.originalUrl.substr(0, 25) + "..."
+                  : link?.originalUrl}
+              </td>
+              <td title={link?.shortUrl}>
+                {link?.shortUrl.length > 25
+                  ? link?.shortUrl.substr(0, 20) + "..."
+                  : link?.shortUrl}
+              </td>
               <td>
                 {new Date(link?.createdAt).toLocaleDateString("es-AR", {
                   day: "2-digit",

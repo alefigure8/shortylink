@@ -5,16 +5,18 @@
  * */
 export async function ErrorResponse(response) {
   let errorDto = {
-    status: response.status,
-    message: "Error desconocido",
-    details: response.message || null,
+    status: 400,
+    message: "Error desconocido. Intente nuevamente",
+    details: null,
+    title: "Error"
   };
 
   try {
     const data = await response.json();
-
+    errorDto.status = data?.status || errorDto.status
     errorDto.message = data?.message || errorDto.message;
     errorDto.details = data?.errors || null;
+    errorDto.title = data?.title || null;
   } catch {
     errorDto.message = "Error al procesar la respuesta del servidor";
   }

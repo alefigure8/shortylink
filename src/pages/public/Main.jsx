@@ -4,10 +4,12 @@ import "../../styles/pages/Main.css";
 import useLinkCreate from "../../hooks/useLinkCreate.js";
 import { useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
+import ErrorAlert from "../../component/alerts/ErrorAlert.jsx";
 
 function Main() {
-  const { response, clearResponse } = useLinkCreate();
+  const { response, clearResponse, error, closeError } = useLinkCreate();
   const featuresRef = useRef(null);
+  const techRef = useRef(null);
   const { setScrolled } = useOutletContext();
 
   // Scroll a la sección de features
@@ -16,13 +18,19 @@ function Main() {
     if (section) section.scrollIntoView({ behavior: "smooth" });
   };
 
+    const scrollToTech = () => {
+    const section = document.getElementById("tech");
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     function handleScroll() {
       const scrollY = window.scrollY;
-      const threshold = 900; // Umbral para cambiar el color del nav
+      const begin = 900;
+      const end = 1900;
       
       // Cambiar color cuando el scroll pasa del umbral
-      setScrolled(scrollY > threshold);
+      setScrolled(scrollY > begin && scrollY < end);
     }
 
     window.addEventListener("scroll", handleScroll);
@@ -48,7 +56,8 @@ function Main() {
           <div className="hero-features">
             <span className="hero-feature">✓ URLs Personalizadas</span>
             <span className="hero-feature">✓ Estadísticas Detalladas</span>
-            <span className="hero-feature">✓ Códigos QR</span>
+            <span className="hero-feature">✓ Enlaces con Expiración</span>
+            <span className="hero-feature">✓ Protege tus Enlaces con Password</span>
           </div>
           <div className="hero-button-container">
             <button className="features-scroll-btn" onClick={scrollToFeatures}>
@@ -81,13 +90,14 @@ function Main() {
             </label>
             <LinkForm />
             {response && <SuccedLinkCreated response={response} onClose={clearResponse} />}
+            {error && <ErrorAlert error={error} onClose={closeError}/>}
           </div>
        
         </div>
       </div>
       </section>
       <section className="features-section" id="features" ref={featuresRef}>
-        <h2 className="features-title">LNKY</h2>
+        <h2 className="features-title">FEATURES</h2>
         <div className="features-cards">
           <div className="feature-card">
             <div className="feature-icon">
@@ -153,12 +163,11 @@ function Main() {
       </section>
       
       {/* Tecnologías Section */}
-      <section className="tech-section">
-        <h2 className="tech-title">Proyecto de Portfolio</h2>
+      <section className="tech-section" id="tech" ref={techRef}>
+        <h2 className="tech-title">SOBRE LNKY</h2>
         <p className="tech-subtitle">
-          Este es un proyecto desarrollado para demostrar mis habilidades en desarrollo full-stack
+          
         </p>
-        
         <div className="tech-cards">
           <div className="tech-card">
             <div className="tech-card-icon">
@@ -166,8 +175,8 @@ function Main() {
             </div>
             <h3>Acerca del Proyecto</h3>
             <p>
-              <strong>LNKY</strong> es una aplicación web completa de acortamiento de URLs que 
-              demuestra mi capacidad para desarrollar soluciones full-stack desde cero. 
+              <strong>LNKY</strong> es una aplicación web de acortamiento de URLs que 
+              realicé para practivar web API con ASP.NET y Reacy. 
               El proyecto incluye autenticación JWT, gestión de usuarios, análisis de datos 
               y una interfaz moderna y responsive.
             </p>
@@ -217,7 +226,6 @@ function Main() {
               <span className="tech-item">SQL Server</span>
               <span className="tech-item">JWT Authentication</span>
               <span className="tech-item">AutoMapper</span>
-              <span className="tech-item">FluentValidation</span>
             </div>
           </div>
           

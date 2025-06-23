@@ -6,9 +6,13 @@ import LinkForm from "../../component/form/LinkForm.jsx";
 import LinkList from "../../component/dashboard/LinkList.jsx";
 import { updateLink } from "../../service/linkService";
 import useSession from "../../hooks/useSession.js";
+import useLinkCreate from "../../hooks/useLinkCreate.js";
+import SuccedLinkCreated from "../../component/alerts/SuccedLinkCreated.jsx";
+import ErrorAlert from "../../component/alerts/ErrorAlert.jsx";
 
 function DashboardMain() {
   const { loadingLinks, userLinks, linkById } = useLinks();
+  const { response, clearResponse,error, closeError } = useLinkCreate();
   const { session } = useSession();
 
   function handleTotalVisits() {
@@ -80,6 +84,8 @@ function DashboardMain() {
             <div className="dashboard-create-content">
               <label>Crear nuevo link:</label>
               <LinkForm />
+              {response && <SuccedLinkCreated response={response} onClose={clearResponse} />}
+              {error && <ErrorAlert error={error} onClose={closeError}/>}
             </div>
           </div>
           {/* LINKS */}

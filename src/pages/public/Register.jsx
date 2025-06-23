@@ -54,7 +54,7 @@ function Register() {
               value={formRegister?.lastName}
               onChange={(e) => handleInput(e)}
             />
-            <label>Email</label>
+            <label>Email <span style={{color: '#d32f2f'}}>*</span></label>
             <input
               id="email"
               type="email"
@@ -62,7 +62,7 @@ function Register() {
               value={formRegister?.email}
               onChange={(e) => handleInput(e)}
             />
-            <label>Password</label>
+            <label>Password <span style={{color: '#d32f2f'}}>*</span></label>
             <input
               id="password"
               type="password"

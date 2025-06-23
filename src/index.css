@@ -1,5 +1,4 @@
-@import url('./styles/variables.css');
-
+@import url("./styles/variables.css");
 
 /* Reset básico */
 * {
@@ -14,7 +13,7 @@
 
 /* Opcional: ajustar estilos base */
 body {
-  font-family: sans-serif;
+  font-family: "Montserrat", sans-serif;
   line-height: 1.5;
   background-color: var(--background-color);
 }

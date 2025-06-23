@@ -58,38 +58,48 @@ function Profile() {
                 className="profile-img"
               />
             </div>
-            <div className="dashboard-card-profile-body">
+            <form className="dashboard-card-profile-body" onSubmit={handleSubmit}>
+              <label htmlFor="firstName">Nombre</label>
               <input
                 id="firstName"
                 value={dataForm?.firstName}
-                onChange={(e) => handleInputChange(e)}
+                onChange={handleInputChange}
+                placeholder="Nombre"
+                autoComplete="off"
               />
+              <label htmlFor="lastName">Apellido</label>
               <input
                 id="lastName"
                 value={dataForm?.lastName}
-                onChange={(e) => handleInputChange(e)}
+                onChange={handleInputChange}
+                placeholder="Apellido"
+                autoComplete="off"
               />
+              <label htmlFor="profilePictureUrl">Foto de perfil (URL)</label>
               <input
                 id="profilePictureUrl"
                 value={dataForm?.profilePictureUrl}
-                onChange={(e) => handleInputChange(e)}
+                onChange={handleInputChange}
+                placeholder="URL de la foto de perfil"
+                autoComplete="off"
               />
               <div className="dashboard-card-buttons">
                 <button
                   className="btn btn-submit"
-                  onClick={(e) => handleSubmit(e)}
+                  type="submit"
                 >
                   Guardar cambios
                 </button>
                 <button
                   className="btn btn-cancel"
-                  onClick={(e) => handleEditProfile(e)}
+                  type="button"
+                  onClick={handleEditProfile}
                 >
                   Cancelar
                 </button>
               </div>
-            </div>
-            {error && (<p>{error?.message}</p>)}
+              {error && (<p className="login-error">{error?.message}</p>)}
+            </form>
           </div>
         )}
       </div>

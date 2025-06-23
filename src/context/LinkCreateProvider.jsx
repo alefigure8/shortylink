@@ -54,8 +54,13 @@ export function LinkProvider({ children }) {
     setResponse(null);
   };
 
+  const closeError = () => 
+  {
+    setError(false);
+  }
+
   return (
-    <LinkContext.Provider value={{ form, error, setError, response, handleInputChange, handleButtonClick, clearResponse }}>
+    <LinkContext.Provider value={{ form, error, closeError, response, handleInputChange, handleButtonClick, clearResponse }}>
       {children}
     </LinkContext.Provider>
   );

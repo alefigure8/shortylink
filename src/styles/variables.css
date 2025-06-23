@@ -1,48 +1,53 @@
 :root {
   /* GENERALS */
-  --primary-color: #ffd600;           /* Amarillo vibrante */
-  --secondary-color: #102a43;         /* Azul oscuro elegante */
-  --tertiary-color: #186faf;          /* Azul medio moderno */
-  --background-color: #0a192f;        /* Azul muy oscuro para fondo */
-  --text-title-color: #ffd600;        /* Amarillo vibrante para títulos */
-  --text-color: #f4f4f4;              /* Gris claro para mejor contraste */
-  --success-color: #2ec4b6;           /* Verde agua moderno */
-  --error-color: #ff4d6d;             /* Rojo coral */
-  --nav-hover-color: #2ec4b6;         /* Verde agua para hover */
+  --primary-color: #ffd600; /* Amarillo vibrante */
+  --secondary-color: #102a43; /* Azul oscuro elegante */
+  --tertiary-color: #186faf; /* Azul medio moderno */
+  --background-color: #0a192f; /* Azul muy oscuro para fondo */
+  --text-title-color: #ffd600; /* Amarillo vibrante para títulos */
+  --text-color: #f4f4f4; /* Gris claro para mejor contraste */
+  --success-color: #2ec4b6; /* Verde agua moderno */
+  --error-color: #ff4d6d; /* Rojo coral */
+  --nav-hover-color: #2ec4b6; /* Verde agua para hover */
 
   /* MAIN */
-  --main-background-color: #102a43;   /* Azul oscuro elegante */
+  --main-background-color: #102a43; /* Azul oscuro elegante */
 
   /* LINK */
-  --link-background-color: #0a192f;   /* Azul muy oscuro */
-  --text-linkform-color: #ffd600;     /* Amarillo vibrante */
+  --link-background-color: #0a192f; /* Azul muy oscuro */
+  --text-linkform-color: #ffd600; /* Amarillo vibrante */
   --link-background-color-table: #f4f4f4; /* Gris claro para tablas */
 
   /* SIZES */
   --nav-height: 60px;
+  --footer-height: 200px;
   --conteiner-width: 900px;
 
   /* DASHBOARDS */
-  --dashboard-secondary-color: #3e92cc;   /* Azul claro */
-  --dashboard-background-color: #f4f4f4;  /* Gris claro */
-  --dashboard-text-color: #22223b;        /* Gris oscuro */
+  --dashboard-secondary-color: #3e92cc; /* Azul claro */
+  --dashboard-background-color: #f4f4f4; /* Gris claro */
+  --dashboard-text-color: #22223b; /* Gris oscuro */
+
+  /* LOGIN */
+  --login-background-color: #f4f4f4; /* Gris claro */
+  --login-text-color: #22223b; /* Gris oscuro */
 
   /* REGISTER */
-  --register-background-color: #f4f4f4;   /* Gris claro */
-  --register-text-color: #22223b;         /* Gris oscuro */
+  --register-background-color: #f4f4f4; /* Gris claro */
+  --register-text-color: #22223b; /* Gris oscuro */
 
   /* SIDEBAR*/
-  --sidebar-background-color: #0a192f;    /* Azul muy oscuro */
-  --sidebar-text-color: #f4f4f4;          /* Gris claro */
-  --sidebar-secondary-color: #ffd600;     /* Amarillo vibrante */
+  --sidebar-background-color: #0a192f; /* Azul muy oscuro */
+  --sidebar-text-color: #f4f4f4; /* Gris claro */
+  --sidebar-secondary-color: #ffd600; /* Amarillo vibrante */
 
   /* BUTTONS */
-  --button-primary-color: #2ec4b6;        /* Verde agua */
-  --button-primary-color-hover: #1b9c8b;  /* Verde agua oscuro */
+  --button-primary-color: #2ec4b6; /* Verde agua */
+  --button-primary-color-hover: #1b9c8b; /* Verde agua oscuro */
 
-  --button-secondary-color: #ffd600;      /* Amarillo vibrante */
-  --button-secondary-color-hover: #e6c200;/* Amarillo más oscuro */
+  --button-secondary-color: #ffd600; /* Amarillo vibrante */
+  --button-secondary-color-hover: #e6c200; /* Amarillo más oscuro */
 
-  --button-cancel-color: #ff4d6d;         /* Rojo coral */
-  --button-cancel-color-hover: #d7263d;   /* Rojo oscuro */
+  --button-cancel-color: #ff4d6d; /* Rojo coral */
+  --button-cancel-color-hover: #d7263d; /* Rojo oscuro */
 }

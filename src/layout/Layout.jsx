@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "../component/Footer.jsx";
 import Nav from "../component/Nav.jsx";
 import "../styles/layout/Layout.css";
