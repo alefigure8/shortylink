@@ -1,19 +1,20 @@
 import "../../styles/pages/dashboard/dashboard.css";
 import Spinner from "../../component/spinner/Spinner.jsx";
 import useLinks from "../../hooks/useLinks.js";
-import { Link } from "react-router-dom";
 import LinkForm from "../../component/form/LinkForm.jsx";
 import LinkList from "../../component/dashboard/LinkList.jsx";
 import { updateLink } from "../../service/linkService";
 import useSession from "../../hooks/useSession.js";
 import useLinkCreate from "../../hooks/useLinkCreate.js";
+import useAnalytics from "../../hooks/useAnalytics.js";
 import SuccedLinkCreated from "../../component/alerts/SuccedLinkCreated.jsx";
 import ErrorAlert from "../../component/alerts/ErrorAlert.jsx";
 
 function DashboardMain() {
   const { loadingLinks, userLinks, linkById } = useLinks();
-  const { response, clearResponse,error, closeError } = useLinkCreate();
+  const { response, clearResponse, error, closeError } = useLinkCreate();
   const { session } = useSession();
+  const { mainSummary } = useAnalytics();
 
   function handleTotalVisits() {
     if (userLinks?.email != "") {
@@ -22,22 +23,6 @@ function DashboardMain() {
         0
       );
     }
-  }
-
-  function handleUltimosDias() {
-    if (userLinks?.email !== "") {
-      const ahora = Date.now();
-      const treintaDiasEnMs = 30 * 24 * 60 * 60 * 1000;
-
-      return userLinks?.links?.reduce((accumulator, currentValue) => {
-        const lastAccess = new Date(currentValue?.lastAccessedAt).getTime();
-        if (!isNaN(lastAccess) && ahora - lastAccess <= treintaDiasEnMs) {
-          return accumulator + 1;
-        }
-        return accumulator;
-      }, 0);
-    }
-    return 0; // o null, según tu lógica
   }
 
   async function handleToggleActive(link) {
@@ -51,13 +36,30 @@ function DashboardMain() {
     if (linkById) linkById(link.id);
     window.location.reload();
   }
-
   return (
     <>
       {loadingLinks ? (
         <Spinner />
       ) : (
         <div className="dashboard-main-container">
+          {/* GRAFICS */}
+          <div className="browser-chart">
+            {mainSummary?.browserUsages.map((el) => (
+              <div>
+                <p>Nomnbre: {el?.browserName}</p>
+                <p>Clicks: {el?.clicks}</p>
+                <p>Porcentaje: {el?.percentage}</p>
+              </div>
+            ))}
+          </div>
+          <div className="days-chart">
+            {mainSummary?.dailyClicks.map((el) => (
+              <div>
+                <p>Día: {el?.date}</p>
+                <p>Clicks: {el?.clicks}</p>
+              </div>
+            ))}
+          </div>
           {/* CARDS */}
           <div className="dashboard-cards">
             <div className="dashboard-card">
@@ -75,7 +77,7 @@ function DashboardMain() {
             <div className="dashboard-card">
               <div className="dashboard-card-title">Últimos 30 días</div>
               <div className="dashboard-card-content">
-                {handleUltimosDias()}
+                {mainSummary?.totalClicksInPeriod}
               </div>
             </div>
           </div>
@@ -84,15 +86,23 @@ function DashboardMain() {
             <div className="dashboard-create-content">
               <label>Crear nuevo link:</label>
               <LinkForm />
-              {response && <SuccedLinkCreated response={response} onClose={clearResponse} />}
-              {error && <ErrorAlert error={error} onClose={closeError}/>}
+              {response && (
+                <SuccedLinkCreated
+                  response={response}
+                  onClose={clearResponse}
+                />
+              )}
+              {error && <ErrorAlert error={error} onClose={closeError} />}
             </div>
           </div>
           {/* LINKS */}
           <div className="dashboard-Links-List">
             <label>Urls recientemente creadas</label>
             {userLinks?.totalLinks > 0 ? (
-              <LinkList userLinks={userLinks} onToggleActive={handleToggleActive} />
+              <LinkList
+                userLinks={userLinks}
+                onToggleActive={handleToggleActive}
+              />
             ) : (
               <p>Aún no hay links. Comience creando uno.</p>
             )}
