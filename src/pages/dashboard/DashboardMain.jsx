@@ -36,30 +36,13 @@ function DashboardMain() {
     if (linkById) linkById(link.id);
     window.location.reload();
   }
+
   return (
     <>
       {loadingLinks ? (
         <Spinner />
       ) : (
         <div className="dashboard-main-container">
-          {/* GRAFICS */}
-          <div className="browser-chart">
-            {mainSummary?.browserUsages.map((el) => (
-              <div>
-                <p>Nomnbre: {el?.browserName}</p>
-                <p>Clicks: {el?.clicks}</p>
-                <p>Porcentaje: {el?.percentage}</p>
-              </div>
-            ))}
-          </div>
-          <div className="days-chart">
-            {mainSummary?.dailyClicks.map((el) => (
-              <div>
-                <p>Día: {el?.date}</p>
-                <p>Clicks: {el?.clicks}</p>
-              </div>
-            ))}
-          </div>
           {/* CARDS */}
           <div className="dashboard-cards">
             <div className="dashboard-card">

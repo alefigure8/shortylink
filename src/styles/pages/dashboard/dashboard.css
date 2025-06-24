@@ -1,7 +1,6 @@
-@import url('../../variables.css');
+@import url("../../variables.css");
 
-.dashboard-main-container
-{
+.dashboard-main-container {
   width: var(--conteiner-width);
   margin: 0 auto;
   display: flex;
@@ -10,23 +9,19 @@
   padding: 20px 0;
 }
 
-.dashboard-create
-{
+.dashboard-create {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   color: var(--dashboard-text-color);
   padding: 28px;
   border-radius: 16px;
   box-sizing: border-box;
   width: 100%;
-  box-shadow: 
-    0 8px 32px rgba(30, 40, 90, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 32px rgba(30, 40, 90, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(255, 184, 0, 0.1);
   border-top: 4px solid #ffb800;
 }
 
-.dashboard-cards
-{
+.dashboard-cards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -35,8 +30,8 @@
   width: 100%;
 }
 
-.dashboard-card
-{
+.dashboard-card-chart,
+.dashboard-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   color: var(--dashboard-text-color);
   padding: 28px 24px;
@@ -44,18 +39,23 @@
   box-sizing: border-box;
   border: 1px solid rgba(255, 184, 0, 0.1);
   border-top: 4px solid #ffb800;
-  width: calc(33.333% - 16px);
-  min-width: 200px;
-  box-shadow: 
-    0 6px 24px rgba(30, 40, 90, 0.06),
-    0 2px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 6px 24px rgba(30, 40, 90, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
   position: relative;
   overflow: hidden;
 }
 
-.dashboard-card::before
+.dashboard-card {
+  width: calc(33.333% - 16px);
+  min-width: 200px;
+}
+
+.dashboard-card-chart
 {
-  content: '';
+  width: 100%;
+}
+
+.dashboard-card::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -65,8 +65,7 @@
   border-radius: 16px 16px 0 0;
 }
 
-.dashboard-card-title
-{
+.dashboard-card-title {
   font-size: 1.1rem;
   margin-bottom: 12px;
   color: #22314a;
@@ -80,8 +79,7 @@
   opacity: 0.8;
 }
 
-.dashboard-card-content
-{
+.dashboard-card-content {
   font-size: 2.2rem;
   color: #ffb800;
   text-align: center;
@@ -94,8 +92,7 @@
   background-clip: text;
 }
 
-.dashboard-Links-List
-{
+.dashboard-Links-List {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   color: var(--dashboard-text-color);
   padding: 28px;
@@ -103,65 +100,54 @@
   box-sizing: border-box;
   width: 100%;
   margin-bottom: 20px;
-  box-shadow: 
-    0 8px 32px rgba(30, 40, 90, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 32px rgba(30, 40, 90, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(255, 184, 0, 0.1);
   border-top: 4px solid #ffb800;
 }
 
 /* Very simple table styles */
-.link-table
-{
+.link-table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
   font-size: 14px;
 }
 
-.link-table thead
-{
+.link-table thead {
   background-color: #f8fafc;
 }
 
 .link-table th,
-.link-table td
-{
+.link-table td {
   padding: 12px 16px;
   text-align: left;
   border-bottom: 1px solid #e0e7ef;
 }
 
-.link-table th
-{
+.link-table th {
   color: #22314a;
   font-weight: 600;
   font-size: 14px;
   background-color: #f8fafc;
 }
 
-.link-table tbody tr
-{
+.link-table tbody tr {
   background-color: #fff;
 }
 
-.link-table tbody tr:nth-child(even)
-{
+.link-table tbody tr:nth-child(even) {
   background-color: #f8fafc;
 }
 
-.link-table tbody tr:hover
-{
+.link-table tbody tr:hover {
   background-color: #f0f0f0;
 }
 
-.link-table td
-{
+.link-table td {
   color: #22314a;
 }
 
-.link-modify
-{
+.link-modify {
   color: #ffb800;
   font-weight: 600;
   text-decoration: none;
@@ -174,22 +160,19 @@
   text-align: center;
 }
 
-.link-modify:hover
-{
+.link-modify:hover {
   background-color: #f0f0f0;
   color: #ffb800;
 }
 
-.dashboard-create-content
-{
+.dashboard-create-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .dashboard-Links-List label,
-.dashboard-create-content label
-{
+.dashboard-create-content label {
   font-size: 1.1rem;
   color: #22314a;
   font-weight: 700;
@@ -199,8 +182,7 @@
 }
 
 /* Simple switch styles */
-.switch
-{
+.switch {
   display: inline-block;
   width: 40px;
   height: 20px;
@@ -210,18 +192,15 @@
   cursor: pointer;
 }
 
-.switch.active
-{
+.switch.active {
   background-color: #2ec4b6;
 }
 
-.switch.inactive
-{
+.switch.inactive {
   background-color: #ff6f61;
 }
 
-.switch-slider
-{
+.switch-slider {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -231,99 +210,87 @@
   background-color: #fff;
 }
 
-.switch.active .switch-slider
-{
+.switch.active .switch-slider {
   left: 2px;
 }
 
-.switch.inactive .switch-slider
-{
+.switch.inactive .switch-slider {
   left: 22px;
 }
 
-.switch:focus
-{
+.switch:focus {
   outline: 2px solid #ffb800;
   outline-offset: 2px;
 }
 
 /* Responsive design */
-@media (max-width: 1024px)
-{
-  .dashboard-cards
-  {
+@media (max-width: 1024px) {
+  .dashboard-cards {
     gap: 20px;
   }
-  
-  .dashboard-card
-  {
+
+  .dashboard-card {
     width: calc(50% - 10px);
     min-width: 180px;
   }
 }
 
-@media (max-width: 768px)
-{
-  .dashboard-main-container
-  {
+@media (max-width: 768px) {
+  .dashboard-main-container {
     gap: 20px;
     padding: 16px 0;
   }
-  
+
   .dashboard-create,
-  .dashboard-Links-List
-  {
+  .dashboard-Links-List {
     padding: 24px;
     border-radius: 12px;
   }
-  
-  .dashboard-card
-  {
+
+  .dashboard-card {
     width: 100%;
     padding: 24px 20px;
   }
-  
-  .dashboard-card-content
-  {
+
+  .dashboard-card-content {
     font-size: 1.8rem;
   }
-  
+
   .link-table th,
-  .link-table td
-  {
+  .link-table td {
     padding: 10px 12px;
     font-size: 13px;
   }
-  
-  .dashboard-cards
-  {
+
+  .dashboard-cards {
     flex-direction: column;
     gap: 16px;
   }
 }
 
-@media (max-width: 480px)
-{
+@media (max-width: 480px) {
   .dashboard-create,
-  .dashboard-Links-List
-  {
+  .dashboard-Links-List {
     padding: 20px;
   }
-  
+
   .link-table th,
-  .link-table td
-  {
+  .link-table td {
     padding: 8px 10px;
     font-size: 12px;
   }
-  
-  .dashboard-card-title
-  {
+
+  .dashboard-card-title {
     font-size: 0.85rem;
   }
-  
-  .dashboard-card-content
-  {
+
+  .dashboard-card-content {
     font-size: 1.6rem;
   }
+}
+
+.bar-chart
+{
+  width: 900px;
+  height: 400px;
 }

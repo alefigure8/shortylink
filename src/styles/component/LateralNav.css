@@ -21,6 +21,12 @@
   overflow-y: auto;
 }
 
+.lateral-nav-ul
+{
+  display: flex;
+  flex-direction: column;
+}
+
 .dashboard-content {
   margin-left: 200px;
 }

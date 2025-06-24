@@ -15,6 +15,7 @@ import Profile from "./pages/dashboard/profile/Profile.jsx";
 import ProtectedRoute from "./layout/ProtectedRoute.jsx";
 import Register from "./pages/public/Register.jsx";
 import { AnalyticsProvider } from "./context/AnalyticsProvider.jsx";
+import DashboardAnalytics from "./pages/dashboard/Dashboardanalytics.jsx";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                     <Route path="account" element={<DashboardLayout />}>
                       <Route index element={<DashboardMain />} />
                       <Route path=":id" element={<DashboardLink />} />
+                      <Route path="analytics" element={<DashboardAnalytics />} />
                       <Route path="profile" element={<Profile />} />
                     </Route>
                   </Route>
