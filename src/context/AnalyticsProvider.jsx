@@ -1,37 +1,50 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSession from "../hooks/useSession";
 import { AnalyticsContext } from "./AnalyticsContext";
 import { isTokenExpired } from "../util/tokenUtil";
-import { fetchDashboardSummary } from "../service/analyticService";
+import { fetchDashboardClicks, fetchDashboardSummary } from "../service/analyticService";
+import { SummaryMainDTO } from "../DTO/SummaryMainDTO";
 
 export function AnalyticsProvider({ children }) {
   const { session, logout } = useSession();
   const [mainSummary, setMainSummary] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [clickLink, setClickLink] = useState(0);
 
-  //Main fetch
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!session) return;
+  //Links Analytics
+  const analyticsFetch = async (days = 30) => {
+    setLoading(true);
 
-        if (isTokenExpired(session)) {
-          logout();
-          return;
-        }
+    if (!session) return;
 
-        let summary = await fetchDashboardSummary(session.token);
-        
-        setMainSummary(summary);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (isTokenExpired(session)) {
+      logout();
+      return;
+    }
 
-    fetchData();
-  }, [session, setMainSummary, logout]);
+    let summary = await fetchDashboardSummary(session.token, days);
+    setMainSummary(summary);
 
+    setLoading(false);
+  };
+
+  // Link By Id Analytics
+  const analyticsByIdFetch = async (id) => {
+    setLoading(true);
+
+    if (!session) return;
+
+    if (isTokenExpired(session)) {
+      logout();
+      return;
+    }
+    let clickLink = await fetchDashboardClicks(id, session.token);
+    setClickLink(clickLink)
+    setLoading(false);
+    
+  };
   return (
-    <AnalyticsContext.Provider value={{ mainSummary }}>
+    <AnalyticsContext.Provider value={{ mainSummary, clickLink, loading, setLoading, analyticsFetch, analyticsByIdFetch }}>
       {children}
     </AnalyticsContext.Provider>
   );

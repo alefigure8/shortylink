@@ -294,3 +294,70 @@
   width: 900px;
   height: 400px;
 }
+
+.chart-title
+{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.select-label {
+  font-weight: 500;
+  color: var(--dashboard-text-color);
+  font-size: 0.9rem;
+}
+
+.custom-select {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--button-secondary-color);
+  background-color: #fff;
+  color: var(--dashboard-text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(30,40,90,0.06);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2322223b" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.tooltip-chart
+{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 20px 10px 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.tooltip-label
+{
+  font-size: 12px;
+}
+
+.tooltip-value
+{
+  color: var(--color-tooltip);
+  font-size: 20px;
+  font-weight: bold;
+}

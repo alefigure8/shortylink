@@ -1,10 +1,13 @@
 import useLinks from "../../hooks/useLinks";
+import useAnalytics from "../../hooks/useAnalytics";
 import useSession from "../../hooks/useSession";
 import { useEffect, useState } from "react";
 import Spinner from "../../component/spinner/Spinner";
 import "../../styles/pages/dashboard/DashboardLink.css";
 import { updateLink } from "../../service/linkService";
 import { useParams } from "react-router-dom";
+import AreaChartAnalytic from "../../component/dashboard/AreaChartAnalytic";
+import AreaChartAnalyticLink from "../../component/dashboard/AreaChartAnalyticLink";
 
 function DashboardLink() {
   const { id } = useParams();
@@ -14,16 +17,29 @@ function DashboardLink() {
   const [modifyTitle, setModifyTitle] = useState(false);
   const [dataForm, setDataForm] = useState(null);
   const [message, setMessage] = useState(null);
+  const { clickLink, setClickLink, analyticsByIdFetch, loading, setLoading} = useAnalytics();
 
-  // Scroll to top when component mounts or when link changes
+  // Llamdos fetch a información y analiticas del link
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id, setLoadingLink]);
-
-  useEffect(() => {
-    linkById(id);
+    const fetchData = async () => {
+      setLoading(true)
+      await linkById(id);
+      await analyticsByIdFetch(id);
+      setLoading(false)
+    };
+    fetchData();
   }, [id]);
 
+  useEffect(()=>{
+    setLoading(true)
+    if(clickLink?.ClickedAt != undefined)
+    {
+      setLoading(false)
+    }
+
+  },[setLoading, clickLink, setClickLink])
+
+  // Update información
   useEffect(() => {
     if (link?.shortUrl !== "") {
       setDataForm(link);
@@ -31,10 +47,9 @@ function DashboardLink() {
     }
   }, [link, setDataForm, setLoadingLink, setMessage]);
 
-  if (loadingLink) {
+  if (loadingLink || loading) {
     return <Spinner />;
   }
-
   const handleModifyLink = (event) => {
     event.preventDefault();
     setModifyLink(!modifyLink);
@@ -59,7 +74,6 @@ function DashboardLink() {
     setModifyLink(false);
     setModifyTitle(false);
     setLoadingLink(false);
-
   };
 
   const handleInput = (event) => {
@@ -118,7 +132,7 @@ function DashboardLink() {
                 Volver
               </button>
             </div>
-            
+            {<p>FECHA: {clickLink?.clickedAt}</p>}
             {!modifyTitle ? (
               <div className="card-link-title-row">
                 <h1 className="card-link-title">{dataForm?.name}</h1>
@@ -127,7 +141,9 @@ function DashboardLink() {
                   tabIndex={0}
                   title="Editar título"
                   onClick={handleModifyTitle}
-                  onKeyPress={e => (e.key === "Enter" ? handleModifyTitle(e) : null)}
+                  onKeyPress={(e) =>
+                    e.key === "Enter" ? handleModifyTitle(e) : null
+                  }
                 >
                   <i className="fa-solid fa-pen"></i>
                 </button>
@@ -151,7 +167,7 @@ function DashboardLink() {
           {/* URLs Section */}
           <div className="card-section">
             <h3 className="section-title">URLs</h3>
-            
+
             <div className="card-item">
               <label>Short URL</label>
               <div className="card-item-value">
@@ -172,7 +188,9 @@ function DashboardLink() {
                     tabIndex={0}
                     title="Editar URL"
                     onClick={handleModifyLink}
-                    onKeyPress={e => (e.key === "Enter" ? handleModifyLink(e) : null)}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" ? handleModifyLink(e) : null
+                    }
                   >
                     <i className="fa-solid fa-pen"></i>
                   </button>
@@ -197,20 +215,29 @@ function DashboardLink() {
           {/* Statistics Section */}
           <div className="card-section">
             <h3 className="section-title">Estadísticas</h3>
-            
+
             <div className="stats-grid">
+
               <div className="stat-item">
                 <div className="stat-label">Clicks</div>
                 <div className="stat-value">{dataForm?.accessCount}</div>
               </div>
-              
               <div className="stat-item">
                 <div className="stat-label">Estado</div>
-                <div className={`stat-value status ${dataForm?.isActive ? 'active' : 'paused'}`}>
+                <div
+                  className={`stat-value status ${
+                    dataForm?.isActive ? "active" : "paused"
+                  }`}
+                >
                   {dataForm?.isActive ? "Activo" : "Pausado"}
                 </div>
+
               </div>
             </div>
+             <div className="stat-item">
+                <div className="stat-label">Clicks últimos 30 días</div>
+                <AreaChartAnalyticLink dataForm={dataForm} />
+              </div>
           </div>
 
           {/* Separator */}
@@ -219,29 +246,36 @@ function DashboardLink() {
           {/* Dates Section */}
           <div className="card-section">
             <h3 className="section-title">Fechas</h3>
-            
+
             <div className="card-item">
               <label>Creado</label>
-              <p>{new Date(dataForm?.createdAt).toLocaleString(undefined, {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}</p>
+              <p>
+                {new Date(dataForm?.createdAt).toLocaleString(undefined, {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
             </div>
 
             <div className="card-item">
               <label>Último acceso</label>
-              <p>{dataForm?.accessCount > 0
-                ? new Date(dataForm?.lastAccessedAt).toLocaleString(undefined, {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })
-                : "Nunca"}</p>
+              <p>
+                {dataForm?.accessCount > 0
+                  ? new Date(dataForm?.lastAccessedAt).toLocaleString(
+                      undefined,
+                      {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )
+                  : "Nunca"}
+              </p>
             </div>
           </div>
 
@@ -251,30 +285,39 @@ function DashboardLink() {
           {/* Actions Section */}
           <div className="card-actions">
             {(modifyLink || modifyTitle) && (
-              <button
-                className="action-button primary"
-                onClick={handleSubmit}
-              >
+              <button className="action-button primary" onClick={handleSubmit}>
                 <i className="fa-solid fa-check"></i>
                 Guardar cambios
               </button>
             )}
-            
+
             {!modifyLink && !modifyTitle && (
               <button
                 onClick={handlePause}
-                className={`action-button ${link.isActive ? 'warning' : 'success'}`}
+                className={`action-button ${
+                  link.isActive ? "warning" : "success"
+                }`}
               >
-                <i className={`fa-solid ${link.isActive ? 'fa-pause' : 'fa-play'}`}></i>
+                <i
+                  className={`fa-solid ${
+                    link.isActive ? "fa-pause" : "fa-play"
+                  }`}
+                ></i>
                 {link.isActive ? "Pausar" : "Activar"}
               </button>
             )}
-            
+
             <button
               onClick={handleCancel}
-              className={`action-button ${modifyLink || modifyTitle ? 'secondary' : 'danger'}`}
+              className={`action-button ${
+                modifyLink || modifyTitle ? "secondary" : "danger"
+              }`}
             >
-              <i className={`fa-solid ${modifyLink || modifyTitle ? 'fa-times' : 'fa-trash'}`}></i>
+              <i
+                className={`fa-solid ${
+                  modifyLink || modifyTitle ? "fa-times" : "fa-trash"
+                }`}
+              ></i>
               {modifyLink || modifyTitle ? "Cancelar" : "Eliminar"}
             </button>
           </div>

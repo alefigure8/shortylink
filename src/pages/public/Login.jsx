@@ -1,8 +1,14 @@
 import "../../styles/pages/Login.css";
 import useLogin from "../../hooks/useLogin.js";
+import { useEffect } from "react";
 
 function Login() {
   const { dataForm, loginError, handleSubmit, inputFormHandle } = useLogin();
+  
+  // Scroll to top when component mounts or when link changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="login-main">

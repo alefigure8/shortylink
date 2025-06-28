@@ -1,18 +1,23 @@
 export function SummaryMainDTO(response) {
+  if (response?.dailyClicks.length > 0) {
+    response.dailyClicks = response?.dailyClicks.map((el) => {
+      return {
+        ...el,
+        date: new Date(el.date),
+      };
+    });
+  }
+  if (response?.linkCLick?.length > 0) {
+    response.linkCLick = response?.linkCLick.map((el) => ({
+      ...el,
+      clickedAt: new Date(el.clickedAt),
+    }));
+  }
 
-    if(response?.dailyClicks.length > 0)
-    {
-        response.dailyClicks = response?.dailyClicks.map( el => {
-            return {
-                date: new Date(el.date).toLocaleDateString(undefined, {year: 'numeric', month: 'numeric', day: 'numeric' }),
-                clicks: el.clicks
-            }
-        })
-    }
-    
   return {
     browserUsages: response.browserUsages || [],
     dailyClicks: response.dailyClicks || [],
-    totalClicksInPeriod: response.totalClicksInPeriod || 0
+    linkCLick: response.linkCLick || [],
+    totalClicksInPeriod: response.totalClicksInPeriod || 0,
   };
 }

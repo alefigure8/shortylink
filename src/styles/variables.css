@@ -50,4 +50,8 @@
 
   --button-cancel-color: #ff4d6d; /* Rojo coral */
   --button-cancel-color-hover: #d7263d; /* Rojo oscuro */
+
+  /* TOOLTIP */
+  --background-tooltip: #fcf1dc;
+  --color-tooltip: #1b9c8b;
 }

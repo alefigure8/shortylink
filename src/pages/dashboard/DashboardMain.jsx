@@ -6,15 +6,21 @@ import LinkList from "../../component/dashboard/LinkList.jsx";
 import { updateLink } from "../../service/linkService";
 import useSession from "../../hooks/useSession.js";
 import useLinkCreate from "../../hooks/useLinkCreate.js";
-import useAnalytics from "../../hooks/useAnalytics.js";
 import SuccedLinkCreated from "../../component/alerts/SuccedLinkCreated.jsx";
 import ErrorAlert from "../../component/alerts/ErrorAlert.jsx";
+import useAnalytics from "../../hooks/useAnalytics.js";
+import { useEffect } from "react";
 
 function DashboardMain() {
   const { loadingLinks, userLinks, linkById } = useLinks();
   const { response, clearResponse, error, closeError } = useLinkCreate();
   const { session } = useSession();
-  const { mainSummary } = useAnalytics();
+  const { mainSummary, analyticsFetch } = useAnalytics();
+
+  useEffect(() => {
+    const fetch = async () => await analyticsFetch();
+    fetch();
+  }, []);
 
   function handleTotalVisits() {
     if (userLinks?.email != "") {
@@ -60,7 +66,7 @@ function DashboardMain() {
             <div className="dashboard-card">
               <div className="dashboard-card-title">Últimos 30 días</div>
               <div className="dashboard-card-content">
-                {mainSummary?.totalClicksInPeriod}
+                {mainSummary?.linkCLick?.length}
               </div>
             </div>
           </div>

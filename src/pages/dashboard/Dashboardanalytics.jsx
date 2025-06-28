@@ -1,62 +1,63 @@
+import BarChartAnalytic from "../../component/dashboard/BarChartAnalytic";
+import PieChartAnalytic from "../../component/dashboard/PieChartAnalytic";
 import useAnalytics from "../../hooks/useAnalytics";
 import "../../styles/pages/dashboard/dashboard.css";
-import {
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  BarChart,
-  Legend,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
+import Spinner from "../../component/spinner/Spinner";
+import { useEffect, useState } from "react";
+import LineChartAnalytic from "../../component/dashboard/LineChartAnalytic";
+import AreaChartAnalytic from "../../component/dashboard/AreaChartAnalytic";
 
 function DashboardAnalytics() {
-  const { mainSummary } = useAnalytics();
+  const { mainSummary, loading, analyticsFetch } = useAnalytics();
+  const [days, setDays] = useState(30);
 
-  const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "#AF19FF",
-    "#FF1942",
-  ];
+  useEffect(() => {
+    const fetch = async () => await analyticsFetch(days);
+    fetch();
+  }, [days, setDays]);
+
+  if (loading) return <Spinner />;
+
+  const selectHandle = (e) => {
+    let monthSelected = e.target.value;
+    setDays(monthSelected);
+  };
+
+  const months = [30, 60, 90, 120, 180, 210, 280, 360];
 
   return (
     <div className="dashboard-main-container">
       <div className="dashboard-card-chart">
-        <h2>Links por día</h2>
-        <BarChart width={800} height={400} data={mainSummary?.dailyClicks}>
-          <CartesianGrid stroke="#ccc" strokeDasharray="2 2" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Bar dataKey="clicks" fill="#82ca9d" />
-          <Tooltip />
-        </BarChart>
+        <div className="select-container">
+          <label htmlFor="days-select" className="select-label">
+            Ver datos de los últimos:
+          </label>
+          <select
+            id="days-select"
+            className="custom-select"
+            onChange={selectHandle}
+            value={days}
+          >
+            {months.map((el) => (
+              <option key={el} value={el}>
+                {el} días
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      {/* TODO: DESPLEGABLE PARA CAMBIAR LA CANTIDAD DE DIAS */}
+      <div className="dashboard-card-chart">
+        <h2 className="chart-title">
+          Clicks de los últimos {mainSummary?.dailyClicks?.length} días
+        </h2>
+        <AreaChartAnalytic mainSummary={mainSummary} />
       </div>
       <div className="dashboard-card-chart">
-        <h2>Browsers</h2>
-        <PieChart width={800} height={400}>
-          <Pie
-            data={mainSummary?.browserUsages}
-            dataKey="clicks"
-            nameKey="browserName"
-            cx="50%"
-            cy="50%"
-          >
-            {mainSummary?.browserUsages.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
+        <h2 className="chart-title">
+          Browsers de los últimos {mainSummary?.dailyClicks?.length} días
+        </h2>
+        <PieChartAnalytic mainSummary={mainSummary} />
       </div>
     </div>
   );
