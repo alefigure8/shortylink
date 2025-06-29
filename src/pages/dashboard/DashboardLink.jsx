@@ -23,21 +23,12 @@ function DashboardLink() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      await linkById(id);
       await analyticsByIdFetch(id);
+      await linkById(id);
       setLoading(false)
     };
     fetchData();
   }, [id]);
-
-  useEffect(()=>{
-    setLoading(true)
-    if(clickLink?.ClickedAt != undefined)
-    {
-      setLoading(false)
-    }
-
-  },[setLoading, clickLink, setClickLink])
 
   // Update información
   useEffect(() => {
@@ -115,7 +106,6 @@ function DashboardLink() {
   const handleGoBack = () => {
     window.location.replace("/account");
   };
-
   return (
     <>
       <div className="link-container">
@@ -132,7 +122,6 @@ function DashboardLink() {
                 Volver
               </button>
             </div>
-            {<p>FECHA: {clickLink?.clickedAt}</p>}
             {!modifyTitle ? (
               <div className="card-link-title-row">
                 <h1 className="card-link-title">{dataForm?.name}</h1>
@@ -236,7 +225,7 @@ function DashboardLink() {
             </div>
              <div className="stat-item">
                 <div className="stat-label">Clicks últimos 30 días</div>
-                <AreaChartAnalyticLink dataForm={dataForm} />
+                <AreaChartAnalyticLink dataForm={clickLink} />
               </div>
           </div>
 

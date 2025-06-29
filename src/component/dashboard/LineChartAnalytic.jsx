@@ -2,16 +2,7 @@ import "../../styles/pages/dashboard/dashboard.css";
 import { CartesianGrid, XAxis, YAxis, Tooltip, LineChart, Bar, Line, Area } from "recharts";
 
 function LineChartAnalytic({ mainSummary }) {
-  const handleClick = (e) => {
-    // console.log(mainSummary)
-    console.log(e.payload.date.toString());
-    console.log("----------------");
 
-    mainSummary?.linkCLick.map((dc) => {
-      console.log(dc.clickedAt.toString());
-      console.log(dc.clickedAt.toString() === e.payload.date.toString());
-    });
-  };
   return (
     <LineChart width={800} height={400} data={mainSummary?.dailyClicks}>
       <CartesianGrid stroke="#ccc" strokeDasharray="2 2" />

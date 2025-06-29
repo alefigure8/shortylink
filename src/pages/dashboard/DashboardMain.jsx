@@ -22,15 +22,6 @@ function DashboardMain() {
     fetch();
   }, []);
 
-  function handleTotalVisits() {
-    if (userLinks?.email != "") {
-      return userLinks?.links?.reduce(
-        (accumulator, currentValue) => accumulator + currentValue?.accessCount,
-        0
-      );
-    }
-  }
-
   async function handleToggleActive(link) {
     await updateLink({
       id: link.id,
@@ -60,13 +51,13 @@ function DashboardMain() {
             <div className="dashboard-card">
               <div className="dashboard-card-title">Clicks totales</div>
               <div className="dashboard-card-content">
-                {handleTotalVisits()}
+                {mainSummary?.totalClicks}
               </div>
             </div>
             <div className="dashboard-card">
               <div className="dashboard-card-title">Últimos 30 días</div>
               <div className="dashboard-card-content">
-                {mainSummary?.linkCLick?.length}
+                {mainSummary?.totalClicksInPeriod}
               </div>
             </div>
           </div>

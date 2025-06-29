@@ -7,17 +7,11 @@ export function SummaryMainDTO(response) {
       };
     });
   }
-  if (response?.linkCLick?.length > 0) {
-    response.linkCLick = response?.linkCLick.map((el) => ({
-      ...el,
-      clickedAt: new Date(el.clickedAt),
-    }));
-  }
 
   return {
     browserUsages: response.browserUsages || [],
     dailyClicks: response.dailyClicks || [],
-    linkCLick: response.linkCLick || [],
     totalClicksInPeriod: response.totalClicksInPeriod || 0,
+    totalClicks: response.totalClicks || 0
   };
 }

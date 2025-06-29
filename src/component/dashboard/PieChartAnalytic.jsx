@@ -4,7 +4,6 @@ import { Tooltip, Legend, PieChart, Pie, Cell } from "recharts";
 function PieChartAnalytic({ mainSummary }) {
   const CustomTooltip = ({ active, payload }) => {
     const isVisible = active && payload && payload.length;
-    console.log(payload);
     return (
       <div
         className="custom-tooltip"

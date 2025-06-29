@@ -3,7 +3,6 @@ import useSession from "../hooks/useSession";
 import { AnalyticsContext } from "./AnalyticsContext";
 import { isTokenExpired } from "../util/tokenUtil";
 import { fetchDashboardClicks, fetchDashboardSummary } from "../service/analyticService";
-import { SummaryMainDTO } from "../DTO/SummaryMainDTO";
 
 export function AnalyticsProvider({ children }) {
   const { session, logout } = useSession();
