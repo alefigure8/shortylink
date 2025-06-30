@@ -5,8 +5,7 @@ import useSession from "../../hooks/useSession.js";
 import "../../styles/component/LinkForm.css";
 
 function LinkForm() {
-  const { form, handleInputChange, handleButtonClick } =
-    useLinkCreate();
+  const { form, handleInputChange, handleButtonClick } = useLinkCreate();
   const { session } = useSession();
 
   return (
@@ -18,6 +17,8 @@ function LinkForm() {
         onChange={(e) => handleInputChange(e)}
         placeholder="Source Link (https://ejemplo.com)"
       />
+      {session && (
+
       <input
         type="text"
         id="name"
@@ -25,6 +26,7 @@ function LinkForm() {
         onChange={(e) => handleInputChange(e)}
         placeholder="Name"
       />
+      )}
       {session && (
         <input
           type="text"
@@ -32,6 +34,15 @@ function LinkForm() {
           value={form?.customName}
           onChange={(e) => handleInputChange(e)}
           placeholder="Custom name"
+        />
+      )}
+      {session && (
+        <input
+          type="password"
+          id="password"
+          value={form?.password}
+          onChange={(e) => handleInputChange(e)}
+          placeholder="Password"
         />
       )}
       <button type="button" onClick={() => handleButtonClick()}>

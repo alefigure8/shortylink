@@ -1,12 +1,18 @@
 const baseUrl = import.meta.env.VITE_API_URL;
+import { Route } from "react-router-dom";
 import { LinkResponseDTO } from "../DTO/LinkResponseDTO.js";
 import { LinksResponseDTO } from "../DTO/LinksResponseDTO.js";
 import { ErrorResponse } from "../util/errorUtil";
 import { SuccessResponse } from "../util/successUtil.js";
 
-
 // CREATE LINK SERVICE
-export async function createLink({ originalurl, name, customName, token = null }) {
+export async function createLink({
+  originalurl,
+  name,
+  customName,
+  password,
+  token = null,
+}) {
   let response = await fetch(`${baseUrl}/link/`, {
     method: "POST",
     headers: {
@@ -17,6 +23,7 @@ export async function createLink({ originalurl, name, customName, token = null }
       originalurl: originalurl,
       name: name,
       customName: customName || null,
+      password: password || null,
     }),
   });
 
@@ -30,7 +37,7 @@ export async function createLink({ originalurl, name, customName, token = null }
 }
 
 // GET ALL LINKS
-export async function getLinks({token = null}) {
+export async function getLinks({ token = null }) {
   let response = await fetch(`${baseUrl}/link`, {
     method: "GET",
     headers: {
@@ -68,7 +75,13 @@ export async function getLinkById(id, token = null) {
 }
 
 // UPDATE LINK
-export async function updateLink({ id, originalUrl, name, isActive, token = null }) {
+export async function updateLink({
+  id,
+  originalUrl,
+  name,
+  isActive,
+  token = null,
+}) {
   let response = await fetch(`${baseUrl}/link/${id}`, {
     method: "PUT",
     headers: {
@@ -79,7 +92,7 @@ export async function updateLink({ id, originalUrl, name, isActive, token = null
       id: id,
       originalUrl: originalUrl,
       name: name,
-      isActive: isActive
+      isActive: isActive,
     }),
   });
 
@@ -90,4 +103,26 @@ export async function updateLink({ id, originalUrl, name, isActive, token = null
 
   const successDto = await SuccessResponse(response);
   return successDto;
+}
+
+// Verificar pass
+export async function sendingPass(id, password) {
+  let response = await fetch(`${baseUrl}/link/verify-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id,
+      password,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorDto = await ErrorResponse(response);
+    throw errorDto;
+  }
+
+  const data = await response.json();
+  window.location.href = data.redirectTo;
 }

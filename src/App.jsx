@@ -16,6 +16,7 @@ import ProtectedRoute from "./layout/ProtectedRoute.jsx";
 import Register from "./pages/public/Register.jsx";
 import { AnalyticsProvider } from "./context/AnalyticsProvider.jsx";
 import DashboardAnalytics from "./pages/dashboard/Dashboardanalytics.jsx";
+import VerifyPass from "./pages/public/VerifyPass.jsx";
 
 function App() {
   return (
@@ -30,8 +31,8 @@ function App() {
                   {/* Páginas públicas dentro del Layout */}
                   <Route index element={<Main />} />
                   <Route path="register" element={<Register />} />
+                  <Route path=":id/pass" element={<VerifyPass />}/>
                   <Route path="*" element={<Error404 />} />
-
                   {/* Protegidas */}
                   <Route element={<ProtectedRoute />}>
                     <Route path="account" element={<DashboardLayout />}>

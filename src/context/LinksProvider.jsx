@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useSession from "../hooks/useSession";
-import { getLinkById, getLinks } from "../service/linkService";
+import { getLinkById, getLinks, sendingPass } from "../service/linkService";
 import { LinksContext } from "./LinksContext";
 import { isTokenExpired } from "../util/tokenUtil";
 import useLinkCreate from "../hooks/useLinkCreate";
@@ -51,6 +51,11 @@ export function LinksProvider({ children }) {
     setLink(link);
   };
 
+  const verifyPass = async ({id, password}) => 
+  {
+      await sendingPass(id, password);
+  }
+
   return (
     <LinksContext.Provider
       value={{
@@ -60,7 +65,8 @@ export function LinksProvider({ children }) {
         loadingLink,
         setLoadingLink,
         link,
-        setLink
+        setLink,
+        verifyPass
       }}
     >
       {children}

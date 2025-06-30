@@ -12,7 +12,8 @@ export function LinkProvider({ children }) {
   const [form, setForm] = useState({
     originalurl: "",
     name: "",
-    customName: ""
+    customName: "",
+    password: ""
   });
 
   // Estado para almacenar la respuesta del servidor y errores
@@ -24,7 +25,6 @@ export function LinkProvider({ children }) {
   // Función para manejar los cambios en los inputs del formulario
   const handleInputChange = (event) => {
     const { id, value } = event.target;
-
     setForm((prevForm) => ({
       ...prevForm,
       [id]: value, // Utilizar el id del input como clave
@@ -38,6 +38,7 @@ export function LinkProvider({ children }) {
         originalurl: form.originalurl,
         name: form.name,
         customName: form.customName,
+        password: form.password,
         token: session?.token || null
       });
       setResponse(response);
