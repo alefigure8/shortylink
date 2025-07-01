@@ -4,9 +4,8 @@ import useSession from "../../hooks/useSession";
 import { useEffect, useState } from "react";
 import Spinner from "../../component/spinner/Spinner";
 import "../../styles/pages/dashboard/DashboardLink.css";
-import { updateLink } from "../../service/linkService";
+import { updateLink, deleteLink} from "../../service/linkService";
 import { useParams } from "react-router-dom";
-import AreaChartAnalytic from "../../component/dashboard/AreaChartAnalytic";
 import AreaChartAnalyticLink from "../../component/dashboard/AreaChartAnalyticLink";
 
 function DashboardLink() {
@@ -17,7 +16,7 @@ function DashboardLink() {
   const [modifyTitle, setModifyTitle] = useState(false);
   const [dataForm, setDataForm] = useState(null);
   const [message, setMessage] = useState(null);
-  const { clickLink, setClickLink, analyticsByIdFetch, loading, setLoading} = useAnalytics();
+  const { clickLink, analyticsByIdFetch, loading, setLoading} = useAnalytics();
 
   // Llamdos fetch a información y analiticas del link
   useEffect(() => {
@@ -51,7 +50,7 @@ function DashboardLink() {
     setModifyTitle(!modifyTitle);
   };
 
-  const handleSubmit = async (event) => {
+   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoadingLink(true);
     await updateLink({
@@ -75,7 +74,8 @@ function DashboardLink() {
     }));
   };
 
-  const handleCancel = (event) => {
+  // --- CANCELAMOS EDICION O BORRAMOS LINK ---
+  const handleCancel = async (event) => {
     event.preventDefault();
 
     if (modifyLink || modifyTitle) {
@@ -83,8 +83,8 @@ function DashboardLink() {
       setModifyTitle(false);
       setDataForm(link);
     } else {
-      //Delete
-      console.log("BOORANDO");
+      await deleteLink({id, token: session?.token})
+      handleGoBack();
     }
   };
 

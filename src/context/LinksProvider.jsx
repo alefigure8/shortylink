@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import useSession from "../hooks/useSession";
-import { getLinkById, getLinks, sendingPass } from "../service/linkService";
+import {
+  getLinkById,
+  getLinks,
+  redirectTo,
+  sendingPass,
+} from "../service/linkService";
 import { LinksContext } from "./LinksContext";
 import { isTokenExpired } from "../util/tokenUtil";
 import useLinkCreate from "../hooks/useLinkCreate";
 
 export function LinksProvider({ children }) {
+
   const [loadingLinks, setLoadingLinks] = useState(true);
   const [loadingLink, setLoadingLink] = useState(true);
   const { session, logout } = useSession();
@@ -29,6 +35,7 @@ export function LinksProvider({ children }) {
     lastAccessedAt: null,
   });
 
+  // --- OBTENER LINKS ---
   useEffect(() => {
     const fetchData = async () => {
       if (!session) return;
@@ -46,15 +53,21 @@ export function LinksProvider({ children }) {
     fetchData();
   }, [session, logout, clearResponse]);
 
+  // --- LINK POR ID ---
   const linkById = async (id) => {
     var link = await getLinkById(id, session);
     setLink(link);
   };
 
-  const verifyPass = async ({id, password}) => 
-  {
-      await sendingPass(id, password);
-  }
+  // --- VERIFICA PASS ---
+  const verifyPass = async ({ id, password }) => {
+    await sendingPass(id, password);
+  };
+
+  // --- REDIRIGE HACIA LINK EXTERNO ---
+  const redirectToLink = async (id) => {
+    await redirectTo(id);
+  };
 
   return (
     <LinksContext.Provider
@@ -66,7 +79,8 @@ export function LinksProvider({ children }) {
         setLoadingLink,
         link,
         setLink,
-        verifyPass
+        verifyPass,
+        redirectToLink
       }}
     >
       {children}

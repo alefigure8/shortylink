@@ -17,6 +17,7 @@ import Register from "./pages/public/Register.jsx";
 import { AnalyticsProvider } from "./context/AnalyticsProvider.jsx";
 import DashboardAnalytics from "./pages/dashboard/Dashboardanalytics.jsx";
 import VerifyPass from "./pages/public/VerifyPass.jsx";
+import Redirect from "./pages/public/Redirect.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                   <Route index element={<Main />} />
                   <Route path="register" element={<Register />} />
                   <Route path=":id/pass" element={<VerifyPass />}/>
+                  <Route path=":id" element={<Redirect />}/>
                   <Route path="*" element={<Error404 />} />
                   {/* Protegidas */}
                   <Route element={<ProtectedRoute />}>
