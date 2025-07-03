@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../../styles/component/SuccedLinkCreated.css';
+import useMessage from '../../hooks/useMessage';
 
 /**
  * 
@@ -8,6 +9,7 @@ import '../../styles/component/SuccedLinkCreated.css';
  */
 function SuccedLinkCreated({ response, onClose }) {
   const [copied, setCopied] = useState(false);
+  const {showMessage} = useMessage();
 
   const handleCopy = async () => {
     try {
@@ -15,7 +17,7 @@ function SuccedLinkCreated({ response, onClose }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Error al copiar:', err);
+      showMessage(err.message)
     }
   };
 

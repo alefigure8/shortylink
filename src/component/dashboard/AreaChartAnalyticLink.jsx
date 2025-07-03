@@ -9,6 +9,10 @@ import {
 } from "recharts";
 
 function AreaChartAnalyticLink({ dataForm }) {
+
+  if(dataForm?.dailyClicks == null)
+    return;
+
   const maxClicks =
     dataForm?.dailyClicks?.length > 0
       ? Math.max(...dataForm.dailyClicks.map((el) => el.clicks))
@@ -16,6 +20,7 @@ function AreaChartAnalyticLink({ dataForm }) {
 
   const yAxisMax = maxClicks === 0 ? 10 : Math.ceil(maxClicks * 1.1);
   const yAxisMin = maxClicks === 0 ? 0 : "auto";
+
   const CustomTooltip = ({ active, payload, label }) => {
     const isVisible = active && payload && payload.length;
     const date = new Date(label);

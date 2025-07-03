@@ -2,11 +2,11 @@ import "../../../App.css";
 import "../../../styles/pages/dashboard/profile/Profile.css";
 import Spinner from "../../../component/spinner/Spinner.jsx";
 import useProfile from "../../../hooks/useProfile";
+import useLoading from "../../../hooks/useLoading.js";
 
 function Profile() {
   const {
     user,
-    loading,
     editProfile,
     error,
     handleSubmit,
@@ -14,13 +14,11 @@ function Profile() {
     dataForm,
     handleEditProfile,
   } = useProfile();
+  const { isLoading } = useLoading();
 
-  if (loading)
-    return (
-      <>
-          <Spinner />
-      </>
-    );
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -28,14 +26,13 @@ function Profile() {
         {!editProfile ? (
           <div className="dashboard-card-profile">
             <div className="dashboard-card-profile-content">
-              {
-                user?.profilePictureUrl&&
+              {user?.profilePictureUrl && (
                 <img
-                src={user?.profilePictureUrl}
-                alt="Foto de perfil"
-                className="profile-img"
-              />
-              }
+                  src={user?.profilePictureUrl}
+                  alt="Foto de perfil"
+                  className="profile-img"
+                />
+              )}
             </div>
             <div className="dashboard-card-profile-body">
               <h2>{user?.fullName}</h2>
@@ -58,7 +55,10 @@ function Profile() {
                 className="profile-img"
               />
             </div>
-            <form className="dashboard-card-profile-body" onSubmit={handleSubmit}>
+            <form
+              className="dashboard-card-profile-body"
+              onSubmit={handleSubmit}
+            >
               <label htmlFor="firstName">Nombre</label>
               <input
                 id="firstName"
@@ -84,10 +84,7 @@ function Profile() {
                 autoComplete="off"
               />
               <div className="dashboard-card-buttons">
-                <button
-                  className="btn btn-submit"
-                  type="submit"
-                >
+                <button className="btn btn-submit" type="submit">
                   Guardar cambios
                 </button>
                 <button
@@ -98,7 +95,7 @@ function Profile() {
                   Cancelar
                 </button>
               </div>
-              {error && (<p className="login-error">{error?.message}</p>)}
+              {error && <p className="login-error">{error?.message}</p>}
             </form>
           </div>
         )}

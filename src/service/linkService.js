@@ -1,5 +1,4 @@
 const baseUrl = import.meta.env.VITE_API_URL;
-import { Route } from "react-router-dom";
 import { LinkResponseDTO } from "../DTO/LinkResponseDTO.js";
 import { LinksResponseDTO } from "../DTO/LinksResponseDTO.js";
 import { ErrorResponse } from "../util/errorUtil";
@@ -57,7 +56,7 @@ export async function getLinks({ token = null }) {
 
 // --- GET LINK BY ID ---
 export async function getLinkById(id, token = null) {
-  let response = await fetch(`${baseUrl}/link/${id}`, {
+  let response = await fetch(`${baseUrl}/link/s/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -79,6 +78,7 @@ export async function updateLink({
   id,
   originalUrl,
   name,
+  password,
   isActive,
   token = null,
 }) {
@@ -92,6 +92,7 @@ export async function updateLink({
       id: id,
       originalUrl: originalUrl,
       name: name,
+      password: password,
       isActive: isActive,
     }),
   });
@@ -106,7 +107,7 @@ export async function updateLink({
 }
 
 // --- DELETE LINK ---
-export async function deleteLink({id, token = null}) {
+export async function deleteLink({ id, token = null }) {
   let response = await fetch(`${baseUrl}/link/${id}`, {
     method: "DELETE",
     headers: {
@@ -118,10 +119,9 @@ export async function deleteLink({id, token = null}) {
     }),
   });
 
-  if(!response.ok)
-  {
-      const errorDto = await ErrorResponse(response);
-      throw errorDto;
+  if (!response.ok) {
+    const errorDto = await ErrorResponse(response);
+    throw errorDto;
   }
 
   const successDto = await SuccessResponse(response);
@@ -145,9 +145,15 @@ export async function sendingPass(id, password) {
     const errorDto = await ErrorResponse(response);
     throw errorDto;
   }
+    const data = await response.json();
 
-  const data = await response.json();
-  window.location.href = data.redirectTo;
+    if (data.actionType == "Redirect") {
+    window.location.href = data.targetUrl;
+  } else if (data.actionType == "RequirePassword") {
+    window.location.href = `${window.location.origin}/${data.linkId}/pass`;
+  } else {
+    throw new Error(`Unexpected action type: ${data.actionType}`);
+  }
 }
 
 // --- REDIRIGIR A URL ORIGINAL ---
@@ -165,5 +171,12 @@ export async function redirectTo(id) {
   }
 
   const data = await response.json();
-  window.location.href = data.redirectTo;
+  console.log("#DATA: " , data)
+  if (data.actionType == "Redirect") {
+    window.location.href = data.targetUrl;
+  } else if (data.actionType == "RequirePassword") {
+    window.location.href = `${window.location.origin}/${data.linkId}/pass`;
+  } else {
+    throw new Error(`Unexpected action type: ${data.actionType}`);
+  }
 }

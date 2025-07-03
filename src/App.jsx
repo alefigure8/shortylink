@@ -18,41 +18,50 @@ import { AnalyticsProvider } from "./context/AnalyticsProvider.jsx";
 import DashboardAnalytics from "./pages/dashboard/Dashboardanalytics.jsx";
 import VerifyPass from "./pages/public/VerifyPass.jsx";
 import Redirect from "./pages/public/Redirect.jsx";
+import { LoadingProvider } from "./context/LoadingProvider.jsx";
+import MessageProvider from "./context/MessageProvider.jsx";
 
 function App() {
   return (
-    <SessionProvider>
-      <UserProvider>
-        <LinkProvider>
-          <AnalyticsProvider>
-            <LinksProvider>
-              <Routes>
-                {/* CON Navbar/Footer */}
-                <Route path="/" element={<Layout />}>
-                  {/* Páginas públicas dentro del Layout */}
-                  <Route index element={<Main />} />
-                  <Route path="register" element={<Register />} />
-                  <Route path=":id/pass" element={<VerifyPass />}/>
-                  <Route path=":id" element={<Redirect />}/>
-                  <Route path="*" element={<Error404 />} />
-                  {/* Protegidas */}
-                  <Route element={<ProtectedRoute />}>
-                    <Route path="account" element={<DashboardLayout />}>
-                      <Route index element={<DashboardMain />} />
-                      <Route path=":id" element={<DashboardLink />} />
-                      <Route path="analytics" element={<DashboardAnalytics />} />
-                      <Route path="profile" element={<Profile />} />
+    <LoadingProvider>
+      <MessageProvider>
+        <SessionProvider>
+          <UserProvider>
+            <AnalyticsProvider>
+              <LinkProvider>
+                <LinksProvider>
+                  <Routes>
+                    {/* CON Navbar/Footer */}
+                    <Route path="/" element={<Layout />}>
+                      {/* Páginas públicas dentro del Layout */}
+                      <Route index element={<Main />} />
+                      <Route path="register" element={<Register />} />
+                      <Route path=":id/pass" element={<VerifyPass />} />
+                      <Route path=":id" element={<Redirect />} />
+                      <Route path="*" element={<Error404 />} />
+                      {/* Protegidas */}
+                      <Route element={<ProtectedRoute />}>
+                        <Route path="account" element={<DashboardLayout />}>
+                          <Route index element={<DashboardMain />} />
+                          <Route path=":id" element={<DashboardLink />} />
+                          <Route
+                            path="analytics"
+                            element={<DashboardAnalytics />}
+                          />
+                          <Route path="profile" element={<Profile />} />
+                        </Route>
+                      </Route>
                     </Route>
-                  </Route>
-                </Route>
-                {/* PÚBLICAS sin Navbar/Footer */}
-                <Route path="login" element={<Login />} />
-              </Routes>
-            </LinksProvider>
-          </AnalyticsProvider>
-        </LinkProvider>
-      </UserProvider>
-    </SessionProvider>
+                    {/* PÚBLICAS sin Navbar/Footer */}
+                    <Route path="login" element={<Login />} />
+                  </Routes>
+                </LinksProvider>
+              </LinkProvider>
+            </AnalyticsProvider>
+          </UserProvider>
+        </SessionProvider>
+      </MessageProvider>
+    </LoadingProvider>
   );
 }
 

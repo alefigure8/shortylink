@@ -4,27 +4,30 @@ import useSession from "../../hooks/useSession";
 import { useEffect, useState } from "react";
 import Spinner from "../../component/spinner/Spinner";
 import "../../styles/pages/dashboard/DashboardLink.css";
-import { updateLink, deleteLink} from "../../service/linkService";
+import { updateLink, deleteLink } from "../../service/linkService";
 import { useParams } from "react-router-dom";
 import AreaChartAnalyticLink from "../../component/dashboard/AreaChartAnalyticLink";
+import useLoading from "../../hooks/useLoading";
+import useMessage from "../../hooks/useMessage";
 
 function DashboardLink() {
   const { id } = useParams();
-  const { linkById, link, loadingLink, setLoadingLink } = useLinks();
+  const { linkById, link } = useLinks();
   const { session } = useSession();
   const [modifyLink, setModifyLink] = useState(false);
   const [modifyTitle, setModifyTitle] = useState(false);
+  const [modifyPass, setModifyPass] = useState(false);
   const [dataForm, setDataForm] = useState(null);
   const [message, setMessage] = useState(null);
-  const { clickLink, analyticsByIdFetch, loading, setLoading} = useAnalytics();
+  const { clickLink, analyticsByIdFetch } = useAnalytics();
+  const { isLoading } = useLoading();
+  const { showMessage } = useMessage();
 
   // Llamdos fetch a información y analiticas del link
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
       await analyticsByIdFetch(id);
       await linkById(id);
-      setLoading(false)
     };
     fetchData();
   }, [id]);
@@ -32,14 +35,15 @@ function DashboardLink() {
   // Update información
   useEffect(() => {
     if (link?.shortUrl !== "") {
+      link.password = "";
       setDataForm(link);
-      setLoadingLink(false);
     }
-  }, [link, setDataForm, setLoadingLink, setMessage]);
+  }, [link, setDataForm, setMessage]);
 
-  if (loadingLink || loading) {
+  if (isLoading) {
     return <Spinner />;
   }
+
   const handleModifyLink = (event) => {
     event.preventDefault();
     setModifyLink(!modifyLink);
@@ -50,20 +54,30 @@ function DashboardLink() {
     setModifyTitle(!modifyTitle);
   };
 
-   const handleSubmit = async (event) => {
+  const handleModifyPass = (event) => {
     event.preventDefault();
-    setLoadingLink(true);
-    await updateLink({
-      id: link.id,
-      originalUrl: dataForm.originalUrl,
-      name: dataForm.name,
-      isActive: link.isActive,
-      token: session?.token || null,
-    });
-    await linkById(id);
-    setModifyLink(false);
-    setModifyTitle(false);
-    setLoadingLink(false);
+    setModifyPass(!modifyPass);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await updateLink({
+        id: link.id,
+        originalUrl: dataForm.originalUrl,
+        name: dataForm.name,
+        password: dataForm.password,
+        isActive: link.isActive,
+        token: session?.token || null,
+      });
+      await linkById(id);
+      setModifyLink(false);
+      setModifyTitle(false);
+      setModifyPass(false);
+      showMessage("Modificado exitosamente")
+    } catch (error) {
+      showMessage(error.message, 'error')
+    }
   };
 
   const handleInput = (event) => {
@@ -78,29 +92,32 @@ function DashboardLink() {
   const handleCancel = async (event) => {
     event.preventDefault();
 
-    if (modifyLink || modifyTitle) {
+    if (modifyLink || modifyTitle || modifyPass) {
       setModifyLink(false);
       setModifyTitle(false);
+      setModifyPass(false);
       setDataForm(link);
     } else {
-      await deleteLink({id, token: session?.token})
+      await deleteLink({ id, token: session?.token });
       handleGoBack();
     }
   };
 
   const handlePause = async (event) => {
     event.preventDefault();
-    setLoadingLink(true);
-    const response = await updateLink({
-      id: link.id,
-      originalUrl: link.originalUrl,
-      name: link.name,
-      isActive: !link.isActive,
-      token: session?.token || null,
-    });
-    await linkById(id);
-    setMessage(response);
-    setLoadingLink(false);
+    try {
+      const response = await updateLink({
+        id: link.id,
+        originalUrl: link.originalUrl,
+        name: link.name,
+        isActive: !link.isActive,
+        token: session?.token || null,
+      });
+      await linkById(id);
+      setMessage(response);
+    } catch (error) {
+      showMessage(error.message, "error");
+    }
   };
 
   const handleGoBack = () => {
@@ -196,6 +213,36 @@ function DashboardLink() {
                 </div>
               )}
             </div>
+
+            <div className="card-item">
+              {!modifyPass ? (
+                <div className="card-item-value">
+                  <button
+                    className="edit-button"
+                    title="Cambiar password"
+                    onClick={handleModifyPass}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" ? handleModifyPass(e) : null
+                    }
+                  >
+                    {dataForm?.hasPassword
+                      ? "Modificar Password"
+                      : "Agregar Password"}
+                  </button>
+                </div>
+              ) : (
+                <div className="edit-input-container">
+                  <input
+                    type="password"
+                    id="password"
+                    onChange={handleInput}
+                    value={dataForm?.password}
+                    autoFocus
+                    placeholder="Modificar Password"
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Separator */}
@@ -206,7 +253,6 @@ function DashboardLink() {
             <h3 className="section-title">Estadísticas</h3>
 
             <div className="stats-grid">
-
               <div className="stat-item">
                 <div className="stat-label">Clicks</div>
                 <div className="stat-value">{dataForm?.accessCount}</div>
@@ -220,13 +266,12 @@ function DashboardLink() {
                 >
                   {dataForm?.isActive ? "Activo" : "Pausado"}
                 </div>
-
               </div>
             </div>
-             <div className="stat-item">
-                <div className="stat-label">Clicks últimos 30 días</div>
-                <AreaChartAnalyticLink dataForm={clickLink} />
-              </div>
+            <div className="stat-item">
+              <div className="stat-label">Clicks últimos 30 días</div>
+              <AreaChartAnalyticLink dataForm={clickLink} />
+            </div>
           </div>
 
           {/* Separator */}
@@ -273,14 +318,14 @@ function DashboardLink() {
 
           {/* Actions Section */}
           <div className="card-actions">
-            {(modifyLink || modifyTitle) && (
+            {(modifyLink || modifyTitle || modifyPass) && (
               <button className="action-button primary" onClick={handleSubmit}>
                 <i className="fa-solid fa-check"></i>
                 Guardar cambios
               </button>
             )}
 
-            {!modifyLink && !modifyTitle && (
+            {!modifyLink && !modifyTitle && !modifyPass && (
               <button
                 onClick={handlePause}
                 className={`action-button ${
@@ -299,15 +344,19 @@ function DashboardLink() {
             <button
               onClick={handleCancel}
               className={`action-button ${
-                modifyLink || modifyTitle ? "secondary" : "danger"
+                modifyLink || modifyTitle || modifyPass ? "secondary" : "danger"
               }`}
             >
               <i
                 className={`fa-solid ${
-                  modifyLink || modifyTitle ? "fa-times" : "fa-trash"
+                  modifyLink || modifyTitle || modifyPass
+                    ? "fa-times"
+                    : "fa-trash"
                 }`}
               ></i>
-              {modifyLink || modifyTitle ? "Cancelar" : "Eliminar"}
+              {modifyLink || modifyTitle || modifyPass
+                ? "Cancelar"
+                : "Eliminar"}
             </button>
           </div>
 

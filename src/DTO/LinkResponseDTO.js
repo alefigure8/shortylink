@@ -8,5 +8,6 @@ export function LinkResponseDTO(response) {
     createdAt: response.createdAt || null,
     isActive: response.isActive || false,
     lastAccessedAt: response.lastAccessedAt || null,
+    hasPassword: response.hasPassword || false
   };
 }

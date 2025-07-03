@@ -5,7 +5,7 @@ import useSession from "../../hooks/useSession.js";
 import "../../styles/component/LinkForm.css";
 
 function LinkForm() {
-  const { form, handleInputChange, handleButtonClick } = useLinkCreate();
+  const { form, handleInputChange, handleButtonClick, urlError } = useLinkCreate();
   const { session } = useSession();
 
   return (
@@ -17,6 +17,7 @@ function LinkForm() {
         onChange={(e) => handleInputChange(e)}
         placeholder="Source Link (https://ejemplo.com)"
       />
+      {urlError && <p style={{ color: 'red', fontSize: '0.8em' }}>{urlError}</p>}
       {session && (
 
       <input

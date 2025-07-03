@@ -1,11 +1,15 @@
 import { useState } from "react";
 import useLinks from "../../hooks/useLinks";
 import { useParams } from "react-router-dom";
+import  useLoading  from "../../hooks/useLoading";
+import Spinner from "../../component/spinner/Spinner";
 
 function VerifyPass() {
   const [dataForm, setDataForm] = useState({password: ""});
   const { verifyPass } = useLinks();
   const {id} = useParams();
+  const {isLoading} = useLoading();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,6 +23,11 @@ function VerifyPass() {
       [id]: value,
     }));
   };
+
+  if(isLoading)
+  {
+    return <Spinner />
+  }
 
   return (
     <>

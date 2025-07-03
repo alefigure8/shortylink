@@ -1,49 +1,65 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useSession from "../hooks/useSession";
 import { AnalyticsContext } from "./AnalyticsContext";
 import { isTokenExpired } from "../util/tokenUtil";
-import { fetchDashboardClicks, fetchDashboardSummary } from "../service/analyticService";
+import {
+  fetchDashboardClicks,
+  fetchDashboardSummary,
+} from "../service/analyticService";
+import useLoading from "../hooks/useLoading";
+import useMessage from "../hooks/useMessage";
 
 export function AnalyticsProvider({ children }) {
   const { session, logout } = useSession();
   const [mainSummary, setMainSummary] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { startLoading, stopLoading } = useLoading();
   const [clickLink, setClickLink] = useState(0);
+  const {showMessage} = useMessage();
 
   //Links Analytics
-  const analyticsFetch = async (days = 30) => {
-    setLoading(true);
-
+  const analyticsFetch =useCallback( async (days = 30) => {
+    startLoading();
     if (!session) return;
 
     if (isTokenExpired(session)) {
       logout();
+      stopLoading();
       return;
     }
-
-    let summary = await fetchDashboardSummary(session.token, days);
-    setMainSummary(summary);
-
-    setLoading(false);
-  };
+    try {
+      let summary = await fetchDashboardSummary(session.token, days);
+      setMainSummary(summary);
+    } catch (error) {
+      showMessage(error.message, 'error')
+    } finally {
+      stopLoading();
+    }
+  },[startLoading, stopLoading, logout, session, showMessage]);
 
   // Link By Id Analytics
-  const analyticsByIdFetch = async (id) => {
-    setLoading(true);
+  const analyticsByIdFetch = useCallback(
+    async (id) => {
+    try {
+      startLoading();
+      if (!session) return;
 
-    if (!session) return;
-
-    if (isTokenExpired(session)) {
-      logout();
-      return;
+      if (isTokenExpired(session)) {
+        logout();
+        return;
+      }
+      let clickLink = await fetchDashboardClicks(id, session.token);
+      setClickLink(clickLink);
+    } catch (error) {
+      showMessage(error.message, 'error')
+    } finally {
+      stopLoading();
     }
-    let clickLink = await fetchDashboardClicks(id, session.token);
-    setClickLink(clickLink)
-    setLoading(false);
-    
-  };
+  }, [session, startLoading, stopLoading, logout, showMessage]);
+
   return (
-    <AnalyticsContext.Provider value={{ mainSummary, clickLink, loading, setLoading, analyticsFetch, analyticsByIdFetch }}>
+    <AnalyticsContext.Provider
+      value={{ mainSummary, clickLink, analyticsFetch, analyticsByIdFetch }}
+    >
       {children}
     </AnalyticsContext.Provider>
   );

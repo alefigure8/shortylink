@@ -1,0 +1,83 @@
+.alert-overlay {
+    position: fixed; /* Fija la posición en la ventana de visualización */
+    top: 0;
+    left: 0;
+    width: 100%; /* Cubre todo el ancho */
+    height: 100%; /* Cubre todo el alto */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    display: flex; /* Usa flexbox para centrar el contenido */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    /* Animación de entrada/salida para el overlay */
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* alert: La caja de la alerta en sí */
+.alert {
+    background-color: #ffffff; /* Fondo blanco para la alerta */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra sutil para profundidad */
+    padding: 25px 35px; /* Espaciado interno */
+    width: 90%; /* Ancho máximo en pantallas pequeñas */
+    max-width: 400px; /* Ancho máximo en pantallas grandes */
+    text-align: center; /* Centra el texto dentro de la alerta */
+    transform: translateY(-20px); /* Ligera animación de entrada vertical */
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0; /* Empieza invisible para la animación */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre secciones */
+}
+
+/* header: Sección del encabezado con icono y título */
+.alert .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espacio entre el icono y el título */
+}
+
+.alert .header .icon {
+    font-size: 48px; /* Tamaño grande para el icono */
+    margin-bottom: 5px; /* Espacio debajo del icono */
+}
+
+/* Estilos para el icono de éxito */
+.alert .header .icon .fas.fa-check-circle {
+    color: #4CAF50; /* Verde para éxito */
+}
+
+/* Estilos para el icono de error */
+.alert .header .icon .fas.fa-xmark-circle {
+    color: #F44336; /* Rojo para error */
+}
+
+.alert .header h3 {
+    margin: 0; /* Elimina márgenes por defecto del h3 */
+    font-size: 22px; /* Tamaño del título */
+    color: #333333; /* Color de texto oscuro */
+}
+
+/* content: Sección del contenido con la información del link */
+.alert .content .link-info {
+    text-align: center;
+}
+
+.alert .content .info-item p {
+    margin: 0; /* Elimina márgenes por defecto del párrafo */
+    font-size: 16px; /* Tamaño del texto del mensaje */
+    color: #666666; /* Color de texto más suave */
+    line-height: 1.5;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

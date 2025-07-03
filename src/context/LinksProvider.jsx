@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useSession from "../hooks/useSession";
 import {
   getLinkById,
@@ -8,14 +8,15 @@ import {
 } from "../service/linkService";
 import { LinksContext } from "./LinksContext";
 import { isTokenExpired } from "../util/tokenUtil";
-import useLinkCreate from "../hooks/useLinkCreate";
+import useLoading from "../hooks/useLoading";
+import useMessage from "../hooks/useMessage";
+import { useNavigate } from "react-router-dom";
 
 export function LinksProvider({ children }) {
-
-  const [loadingLinks, setLoadingLinks] = useState(true);
-  const [loadingLink, setLoadingLink] = useState(true);
   const { session, logout } = useSession();
-  const { clearResponse } = useLinkCreate();
+  const { startLoading, stopLoading } = useLoading();
+  const { showMessage } = useMessage();
+const navigate = useNavigate();
 
   const [userLinks, setUserLinks] = useState({
     shortUrl: "",
@@ -36,51 +37,87 @@ export function LinksProvider({ children }) {
   });
 
   // --- OBTENER LINKS ---
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    startLoading();
+    try {
       if (!session) return;
 
       if (isTokenExpired(session)) {
         logout();
+        setUserLinks({});
         return;
       }
 
       let linksData = await getLinks(session);
       setUserLinks(linksData);
-      setLoadingLinks(false);
-    };
+    } catch (error) {
+      showMessage(error.message, "error");
+    } finally {
+      stopLoading();
+    }
+  }, [logout, session, startLoading, stopLoading, showMessage]);
 
-    fetchData();
-  }, [session, logout, clearResponse]);
+  useEffect(() => {
+    if (session) fetchData();
+  }, [session, fetchData]);
 
   // --- LINK POR ID ---
-  const linkById = async (id) => {
-    var link = await getLinkById(id, session);
-    setLink(link);
-  };
+  const linkById = useCallback(
+    async (id) => {
+      try {
+        startLoading();
+        var link = await getLinkById(id, session);
+        setLink(link);
+      } catch (error) {
+        showMessage(error.message, "error");
+        setLink({});
+      } finally {
+        stopLoading();
+      }
+    },
+    [session, setLink, startLoading, stopLoading, showMessage]
+  );
 
   // --- VERIFICA PASS ---
-  const verifyPass = async ({ id, password }) => {
-    await sendingPass(id, password);
-  };
+  const verifyPass = useCallback(
+    async ({ id, password }) => {
+      try {
+        startLoading();
+        await sendingPass(id, password);
+      } catch (error) {
+        showMessage(error.message, "error");
+      } finally {
+        stopLoading();
+      }
+    },
+    [startLoading, stopLoading, showMessage]
+  );
 
   // --- REDIRIGE HACIA LINK EXTERNO ---
-  const redirectToLink = async (id) => {
-    await redirectTo(id);
-  };
+  const redirectToLink = useCallback(
+    async (id) => {
+      try {
+        startLoading();
+        await redirectTo(id);
+      } catch (error) {
+        showMessage(error.message, "error");
+        navigate("/link-not-found")
+      } finally {
+        stopLoading();
+      }
+    },
+    [startLoading, stopLoading, showMessage,navigate]
+  );
 
   return (
     <LinksContext.Provider
       value={{
-        loadingLinks,
         userLinks,
         linkById,
-        loadingLink,
-        setLoadingLink,
         link,
         setLink,
         verifyPass,
-        redirectToLink
+        redirectToLink,
       }}
     >
       {children}
