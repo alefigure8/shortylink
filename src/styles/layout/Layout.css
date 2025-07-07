@@ -30,9 +30,9 @@
     "header"
     "layout"
     "footer";
-  grid-template-rows: var(--nav-height) 1fr var(--footer-height);
+  grid-template-rows: var(--nav-height) 1fr;
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--nav-height));
   background: none;
   overflow-x: hidden;
   overflow-y: visible;

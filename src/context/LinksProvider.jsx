@@ -16,7 +16,7 @@ export function LinksProvider({ children }) {
   const { session, logout } = useSession();
   const { startLoading, stopLoading } = useLoading();
   const { showMessage } = useMessage();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [userLinks, setUserLinks] = useState({
     shortUrl: "",
@@ -36,6 +36,9 @@ const navigate = useNavigate();
     lastAccessedAt: null,
   });
 
+  const [page, setPage] = useState(1);
+  const [linkAmount, setLinkAmount] = useState(5);
+
   // --- OBTENER LINKS ---
   const fetchData = useCallback(async () => {
     startLoading();
@@ -47,15 +50,14 @@ const navigate = useNavigate();
         setUserLinks({});
         return;
       }
-
-      let linksData = await getLinks(session);
+      let linksData = await getLinks(page, linkAmount, session?.token);
       setUserLinks(linksData);
     } catch (error) {
       showMessage(error.message, "error");
     } finally {
       stopLoading();
     }
-  }, [logout, session, startLoading, stopLoading, showMessage]);
+  }, [logout, session, startLoading, stopLoading, showMessage, page, linkAmount]);
 
   useEffect(() => {
     if (session) fetchData();
@@ -97,25 +99,30 @@ const navigate = useNavigate();
   const redirectToLink = useCallback(
     async (id) => {
       try {
-        startLoading();
         await redirectTo(id);
       } catch (error) {
         showMessage(error.message, "error");
-        navigate("/link-not-found")
+        navigate("/brokenlink");
       } finally {
-        stopLoading();
+        // stopLoading();
       }
     },
-    [startLoading, stopLoading, showMessage,navigate]
+    [showMessage, navigate]
   );
 
   return (
     <LinksContext.Provider
       value={{
         userLinks,
-        linkById,
+        page,
+        linkAmount,
         link,
+
+        setPage,
+        setLinkAmount,
         setLink,
+
+        linkById,
         verifyPass,
         redirectToLink,
       }}

@@ -1,12 +1,24 @@
+import { Link } from "react-router-dom";
+import "../../styles/pages/error404.css"; // Importar el CSS
 
 function Error404() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-6xl font-bold text-red-600">404</h1>
-      <p className="mt-4 text-xl text-gray-700">Page Not Found</p>
-      <a href="/" className="mt-6 text-blue-500 hover:underline">
-        Go back to Home
-      </a>
+    <div className="error-container">
+      <div className="error-card">
+        <img
+          src="/img/404.png" // Ruta a la imagen en la carpeta public
+          alt="Página no encontrada"
+          className="error-image"
+        />
+        <h1 className="error-title">¡Oops! Página no encontrada</h1>
+        <p className="error-message">
+          Parece que te has perdido. La página que buscas no existe o ha sido
+          movida.
+        </p>
+        <Link to="/" className="error-button">
+          Volver al Inicio
+        </Link>
+      </div>
     </div>
   );
 }

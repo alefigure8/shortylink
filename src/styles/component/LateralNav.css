@@ -1,21 +1,26 @@
 @import url('../variables.css');
 
+.lateral-nav-container
+{
+  background-color: var(--secondary-color);
+  height: 100%; /* Restamos más altura para el footer */
+  min-height: 0;
+  min-width: 200px;
+}
+
 .lateral-nav {
-  position: fixed;
-  top: var(--nav-height);
-  left: 0;
   height: 100%; /* Restamos más altura para el footer */
   min-height: 0;
   width: 200px;
-  background-color: var(--secondary-color);
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
   color: var(--text-color);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  padding: 1.5rem 0.5rem;
   z-index: 100;
-  border-radius: 0 0 0 0;
   margin: 0;
   box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.10);
   overflow-y: auto;
@@ -34,7 +39,7 @@
 .lateral-nav ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 2rem;
 }
 
 .lateral-nav-li {
@@ -42,7 +47,6 @@
   padding: 12px 18px;
   cursor: pointer;
   width: 100%;
-  border-radius: 8px 0 0 8px;
   display: flex;
   align-items: center;
   gap: 0.7rem;

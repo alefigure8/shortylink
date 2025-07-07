@@ -1,3 +1,5 @@
+@import url("../variables.css");
+
 .alert-overlay {
     position: fixed; /* Fija la posición en la ventana de visualización */
     top: 0;
@@ -69,6 +71,45 @@
     font-size: 16px; /* Tamaño del texto del mensaje */
     color: #666666; /* Color de texto más suave */
     line-height: 1.5;
+}
+
+/* Estilos para los botones de confirmación */
+.confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espacio entre los botones */
+    margin-top: 20px; /* Espacio arriba de los botones */
+}
+
+.btn-confirm {
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cursor de puntero */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+}
+
+.btn-confirm:hover {
+    transform: translateY(-2px); /* Efecto de levantamiento al pasar el mouse */
+}
+
+.btn-yes {
+    background-color: var(--button-primary-color); /* Verde para "Sí" */
+    color: white; /* Texto blanco */
+}
+
+.btn-yes:hover {
+    background-color: var(--button-primary-color-hover); /* Verde más oscuro al pasar el mouse */
+}
+
+.btn-no {
+    background-color: var(--button-cancel-color); /* Rojo para "No" */
+    color: white; /* Texto blanco */
+}
+
+.btn-no:hover {
+    background-color: var(--button-cancel-color-hover); /* Rojo más oscuro al pasar el mouse */
 }
 
 /* Animaciones */

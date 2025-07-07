@@ -1,6 +1,30 @@
 import { Link } from "react-router-dom";
+import "../../styles/component/pagination.css";
 
-function LinkList({ userLinks, onToggleActive }) {
+function LinkList({ userLinks, onToggleActive, setPage }) {
+  const handlePaginationClick = (event) => {
+    event.preventDefault();
+    setPage(parseInt(event.target.value));
+  };
+
+  const handlePaginationNextPage = (e) => {
+    e.preventDefault();
+    setPage(
+      userLinks?.pageNumber + 1 <= userLinks?.totalPages
+        ? userLinks?.pageNumber + 1
+        : userLinks?.pageNumber
+    );
+  };
+
+    const handlePaginationPreviewPage = (e) => {
+    e.preventDefault();
+    setPage(
+      userLinks?.pageNumber - 1 <= userLinks?.totalPages
+        ? userLinks?.pageNumber - 1
+        : userLinks?.pageNumber
+    );
+  };
+
   return (
     <>
       <table className="link-table">
@@ -17,12 +41,14 @@ function LinkList({ userLinks, onToggleActive }) {
           </tr>
         </thead>
         <tbody>
-          {userLinks?.links?.map((link) => (
+          {userLinks?.items?.map((link) => (
             <tr key={link.id || link.shortUrl}>
               <td title={link?.name != null ? link?.name : "Sin nombre"}>
-                {link?.name != null ? (link?.name?.length > 10
-                  ? link?.name.substr(0, 10) + "..."
-                  : link?.name) : "-" }
+                {link?.name != null
+                  ? link?.name?.length > 10
+                    ? link?.name.substr(0, 10) + "..."
+                    : link?.name
+                  : "-"}
               </td>
               <td title={link?.originalUrl}>
                 {link?.originalUrl.length > 25
@@ -63,6 +89,64 @@ function LinkList({ userLinks, onToggleActive }) {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className="pagination-container">
+        <ul className="pagination">
+          <li
+            className={
+              userLinks?.pageNumber === 1 ? "page-item disabled" : "page-item"
+            }
+            disabled={userLinks?.pageNumber === 1}
+          >
+            <button
+              className="page-link"
+              aria-label="Previous"
+              onClick={(e => handlePaginationPreviewPage(e))}
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+
+          {/* Generate page number buttons */}
+          {[...Array(userLinks?.totalPages)].map((_, index) => (
+            <li
+              key={index}
+              className={`page-item ${
+                index + 1 === userLinks?.pageNumber ? "active" : ""
+              }`}
+            >
+              <button
+                className="page-link"
+                onClick={(e) => handlePaginationClick(e)}
+                value={index + 1}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+
+          <li
+            className={
+              userLinks?.pageNumber === userLinks?.totalPages
+                ? "page-item disabled"
+                : "page-item"
+            }
+            disabled={userLinks?.pageNumber === userLinks?.totalPages}
+          >
+            <button
+              className="page-link"
+              aria-label="Next"
+              onClick={e => handlePaginationNextPage(e)}
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+        </ul>
+        <span className="pagination-info">
+          Página {userLinks?.pageNumber} de {userLinks?.totalPages}
+        </span>
+      </div>
     </>
   );
 }

@@ -36,13 +36,16 @@ export async function createLink({
 }
 
 // --- GET ALL LINKS ---
-export async function getLinks({ token = null }) {
+export async function getLinks(page = 1, links = 5, token = null ) {
+
   let response = await fetch(`${baseUrl}/link`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
-    },
+      page: page,
+      links: links
+    }
   });
 
   if (!response.ok) {
@@ -107,7 +110,7 @@ export async function updateLink({
 }
 
 // --- DELETE LINK ---
-export async function deleteLink({ id, token = null }) {
+export async function deleteLink(id, {token = null }) {
   let response = await fetch(`${baseUrl}/link/${id}`, {
     method: "DELETE",
     headers: {
@@ -171,7 +174,6 @@ export async function redirectTo(id) {
   }
 
   const data = await response.json();
-  console.log("#DATA: " , data)
   if (data.actionType == "Redirect") {
     window.location.href = data.targetUrl;
   } else if (data.actionType == "RequirePassword") {

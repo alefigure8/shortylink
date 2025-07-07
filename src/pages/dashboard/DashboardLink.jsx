@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import AreaChartAnalyticLink from "../../component/dashboard/AreaChartAnalyticLink";
 import useLoading from "../../hooks/useLoading";
 import useMessage from "../../hooks/useMessage";
+import ConfirmAlert from "../../component/alerts/ConfirmAlert";
 
 function DashboardLink() {
   const { id } = useParams();
@@ -18,10 +19,11 @@ function DashboardLink() {
   const [modifyTitle, setModifyTitle] = useState(false);
   const [modifyPass, setModifyPass] = useState(false);
   const [dataForm, setDataForm] = useState(null);
-  const [message, setMessage] = useState(null);
   const { clickLink, analyticsByIdFetch } = useAnalytics();
   const { isLoading } = useLoading();
   const { showMessage } = useMessage();
+  const [confirmAlertDelete, setConfirmAlertDelete] = useState(false);
+  const [confirmAlertPause, setConfirmAlertPause] = useState(false);
 
   // Llamdos fetch a información y analiticas del link
   useEffect(() => {
@@ -38,12 +40,46 @@ function DashboardLink() {
       link.password = "";
       setDataForm(link);
     }
-  }, [link, setDataForm, setMessage]);
+  }, [link, setDataForm]);
 
+  // --- LOADING ---
   if (isLoading) {
     return <Spinner />;
   }
 
+  // --- DELETE LINK ----
+  const onConfirmDelete = async (response) => {
+    if (response) {
+      setConfirmAlertDelete(false);
+      await deleteLink(id, session);
+      handleGoBack();
+    } else {
+      setConfirmAlertDelete(false);
+    }
+  };
+
+  const onConfirmPause = async (response) => {
+    if (response) {
+      try {
+        const response = await updateLink({
+          id: link.id,
+          originalUrl: link.originalUrl,
+          name: link.name,
+          isActive: !link.isActive,
+          token: session?.token || null,
+        });
+        await linkById(id);
+        showMessage(response.message)
+      } catch (error) {
+        showMessage(error.message, "error");
+      }
+      setConfirmAlertPause(false);
+    } else {
+      setConfirmAlertPause(false);
+    }
+  };
+
+  /// --- MODIFICAR LINK ---
   const handleModifyLink = (event) => {
     event.preventDefault();
     setModifyLink(!modifyLink);
@@ -59,6 +95,7 @@ function DashboardLink() {
     setModifyPass(!modifyPass);
   };
 
+  // --- SUBMIT FORM ---
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -74,12 +111,13 @@ function DashboardLink() {
       setModifyLink(false);
       setModifyTitle(false);
       setModifyPass(false);
-      showMessage("Modificado exitosamente")
+      showMessage("Modificado exitosamente");
     } catch (error) {
-      showMessage(error.message, 'error')
+      showMessage(error.message, "error");
     }
   };
 
+  // --- HANDLE INPUT ---
   const handleInput = (event) => {
     const { id, value } = event.target;
     setDataForm((prevForm) => ({
@@ -88,7 +126,7 @@ function DashboardLink() {
     }));
   };
 
-  // --- CANCELAMOS EDICION O BORRAMOS LINK ---
+  // --- CANCELAMOS EDICION O ABRIMOS CONFIRMACION PARA DELETE DE LINK ---
   const handleCancel = async (event) => {
     event.preventDefault();
 
@@ -98,28 +136,17 @@ function DashboardLink() {
       setModifyPass(false);
       setDataForm(link);
     } else {
-      await deleteLink({ id, token: session?.token });
-      handleGoBack();
+      setConfirmAlertDelete(true);
     }
   };
 
+  // --- PAUSAMOS EL LINK ---
   const handlePause = async (event) => {
     event.preventDefault();
-    try {
-      const response = await updateLink({
-        id: link.id,
-        originalUrl: link.originalUrl,
-        name: link.name,
-        isActive: !link.isActive,
-        token: session?.token || null,
-      });
-      await linkById(id);
-      setMessage(response);
-    } catch (error) {
-      showMessage(error.message, "error");
-    }
+    setConfirmAlertPause(true);
   };
 
+  // --- GO BACK ---
   const handleGoBack = () => {
     window.location.replace("/account");
   };
@@ -359,16 +386,24 @@ function DashboardLink() {
                 : "Eliminar"}
             </button>
           </div>
-
-          {/* Message */}
-          {message?.ok && (
-            <div className="message success">
-              <i className="fa-solid fa-check-circle"></i>
-              {message?.message}
-            </div>
-          )}
         </div>
       </div>
+      {confirmAlertDelete && (
+        <ConfirmAlert
+          text={"¿Seguro desea borrar el link?"}
+          type={"warning"}
+          onConfirm={onConfirmDelete}
+        />
+      )}
+      {confirmAlertPause&& (
+        <ConfirmAlert
+          text={dataForm?.isActive
+            ? "¿Seguro desea pausar el link?"
+            : "¿Seguro desea activar el link?"}
+          type={"warning"}
+          onConfirm={onConfirmPause}
+        />
+      )}
     </>
   );
 }

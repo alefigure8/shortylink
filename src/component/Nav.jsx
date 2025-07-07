@@ -56,8 +56,11 @@ function Nav({ scrolled }) {
                 </span>
                 {menuOpen && (
                   <div className="nav-dropdown-menu">
-                    <button type="button" className="nav-dropdown-item" onClick={() => { setMenuOpen(false); navigate("/account"); }}>
-                      Home
+                     <button type="button" className="nav-dropdown-item" onClick={() => { setMenuOpen(false); navigate("/account"); }}>
+                      Overview
+                    </button>
+                     <button type="button" className="nav-dropdown-item" onClick={() => { setMenuOpen(false); navigate("/account/analytics"); }}>
+                      Analytics
                     </button>
                     <button type="button" className="nav-dropdown-item" onClick={() => { setMenuOpen(false); navigate("/account/profile"); }}>
                       Profile

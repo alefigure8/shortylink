@@ -13,7 +13,8 @@ import { useEffect } from "react";
 import useLoading from "../../hooks/useLoading.js";
 
 function DashboardMain() {
-  const { userLinks, linkById } = useLinks();
+  const { userLinks, linkById, linkAmount, page, setPage, setLinkAmount } =
+    useLinks();
   const { response, clearResponse, error, closeError } = useLinkCreate();
   const { session } = useSession();
   const { mainSummary, analyticsFetch } = useAnalytics();
@@ -36,6 +37,15 @@ function DashboardMain() {
     if (linkById) linkById(link.id);
     window.location.reload();
   }
+
+  const handlePaginationLinkAmount = (e) => {
+    e.preventDefault();
+    if(page > 1)
+    {
+      setPage(1)
+    }
+    setLinkAmount(e.target.value);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -78,11 +88,30 @@ function DashboardMain() {
         </div>
         {/* LINKS */}
         <div className="dashboard-Links-List">
-          <label>Urls recientemente creadas</label>
+          <dir className="select-container">
+            <label>Urls recientemente creadas</label>
+            <select
+              className="custom-select"
+              onChange={(e) => handlePaginationLinkAmount(e)}
+            >
+              {[...Array(5)].map((_, i) => {
+                return (
+                  <option
+                    selected={i === linkAmount / 5 - 1 ? true : false}
+                    key={i}
+                    value={(i + 1) * 5}
+                  >
+                    {(i + 1) * 5}
+                  </option>
+                );
+              })}
+            </select>
+          </dir>
           {userLinks?.totalLinks > 0 ? (
             <LinkList
-              userLinks={userLinks}
+              userLinks={userLinks.links}
               onToggleActive={handleToggleActive}
+              setPage={setPage}
             />
           ) : (
             <p>Aún no hay links. Comience creando uno.</p>

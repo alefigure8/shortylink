@@ -24,7 +24,18 @@ function Redirect()
     }
         
     return(<>
-        <h1>REDIRECT</h1>
+            <div className="error-container">
+      <div className="error-card">
+        <img
+          src="/img/waitingNarco.png"
+          alt="Enlace roto o no encontrado"
+          className="error-image"
+        />
+        <p className="error-message">
+          Aguarda mientras la página a la que se está dirigiendo termine de cargarse.
+        </p>
+      </div>
+    </div>
     </>)
 }
 

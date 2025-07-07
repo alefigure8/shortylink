@@ -20,6 +20,7 @@ import VerifyPass from "./pages/public/VerifyPass.jsx";
 import Redirect from "./pages/public/Redirect.jsx";
 import { LoadingProvider } from "./context/LoadingProvider.jsx";
 import MessageProvider from "./context/MessageProvider.jsx";
+import BrokenLink from "./pages/public/BrokenLink.jsx";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
                       <Route path="register" element={<Register />} />
                       <Route path=":id/pass" element={<VerifyPass />} />
                       <Route path=":id" element={<Redirect />} />
+                      <Route path="brokenlink" element={<BrokenLink />} />
                       <Route path="*" element={<Error404 />} />
                       {/* Protegidas */}
                       <Route element={<ProtectedRoute />}>
